@@ -1,4 +1,4 @@
-import Game from './Game.js'
+import Game from './Game.js';
 
 /*
  * Start the game whenever the entire DOM is loaded

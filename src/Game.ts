@@ -1,3 +1,5 @@
+import Level from './Level.js';
+import Player from './Player.js';
 
 export default class Game {
   // Properties for canvas and keyboard
@@ -6,6 +8,12 @@ export default class Game {
   private ctx: CanvasRenderingContext2D;
 
   private score: number;
+
+  private player: Player;
+
+  private level: Level;
+
+  private visBucks: number;
 
   /**
    * Initialize the Game
@@ -18,13 +26,25 @@ export default class Game {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
+    this.score = 69;
+    this.visBucks = 420;
+
+    this.player = new Player(this.canvas);
+
+    this.loop();
   }
+
+  private loop = () => {
+    this.handleKeyBoard();
+    this.draw();
+    requestAnimationFrame(this.loop);
+  };
 
   /**
    * Handle the UP key on the keyboard to give the player the ability to move the HZ bird up
    */
   private handleKeyBoard() {
-
+    this.player.move();
   }
 
   /**
@@ -32,17 +52,22 @@ export default class Game {
    */
   private draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
+    this.player.draw(this.ctx);
 
     // write the current score
     this.writeTextToCanvas(
-      `Score is: ${this.score}`,
+      `Score: ${this.score}`,
       40,
       this.canvas.width / 2,
-      40
+      50,
+    );
+    this.writeTextToCanvas(
+      `VisBuck: ${this.visBucks}`,
+      40,
+      this.canvas.width / 4,
+      50,
     );
   }
-
 
   /**
    * Writes text to the canvas
@@ -60,7 +85,7 @@ export default class Game {
     xCoordinate: number,
     yCoordinate: number,
     alignment: CanvasTextAlign = 'center',
-    color: string = 'white',
+    color: string = 'black',
   ): void {
     this.ctx.font = `${fontSize}px sans-serif`;
     this.ctx.fillStyle = color;
