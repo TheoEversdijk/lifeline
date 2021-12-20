@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+    ts-app:
+        working_dir: /app
+        image: 'node:lts'
+        volumes:
+            - .:/app
+        tty: true
