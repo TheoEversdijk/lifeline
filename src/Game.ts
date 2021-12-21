@@ -26,10 +26,11 @@ export default class Game {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
-    this.score = 69;
+    this.score = 0;
     this.visBucks = 420;
 
     this.player = new Player(this.canvas);
+    this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
 
     this.loop();
   }
@@ -37,6 +38,12 @@ export default class Game {
   private loop = () => {
     this.handleKeyBoard();
     this.draw();
+    if (this.player.lockAnswer()) {
+      this.level.answerSelect(this.player);
+    }
+
+    this.isCompleted();
+
     requestAnimationFrame(this.loop);
   };
 
@@ -44,7 +51,19 @@ export default class Game {
    * Handle the UP key on the keyboard to give the player the ability to move the HZ bird up
    */
   private handleKeyBoard() {
-    this.player.move();
+    this.player.move(this.canvas);
+  }
+
+  private isCompleted() {
+    if (this.level.getCompletion() === false) {
+      this.level.draw();
+    }
+
+    if (this.level.getCompletion() === true) {
+      this.level.setCompletion();
+      this.score += 10;
+      this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
+    }
   }
 
   /**
@@ -65,6 +84,12 @@ export default class Game {
       `VisBuck: ${this.visBucks}`,
       40,
       this.canvas.width / 4,
+      50,
+    );
+    this.writeTextToCanvas(
+      `HP: ${this.player.getHP()}`,
+      40,
+      this.canvas.width / 1.40,
       50,
     );
   }

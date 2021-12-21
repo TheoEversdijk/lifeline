@@ -1,3 +1,4 @@
+import Circle from './Circle.js';
 import Game from './Game.js';
 import KeyboardListener from './KeyboardListener.js';
 
@@ -9,6 +10,8 @@ export default class Player {
   private yPos: number;
 
   private velocity: number;
+
+  private health: number;
 
   private image: HTMLImageElement;
 
@@ -23,27 +26,95 @@ export default class Player {
     this.xPos = canvas.width / 2;
     this.yPos = canvas.height / 2;
     this.velocity = 3;
+    this.health = 100;
   }
 
   /**
    * Handles inputs and makes the player move
+   *
+   * @param canvas The canvas
    */
-  public move(): void {
-    if (this.keyListener.isKeyDown(KeyboardListener.KEY_DOWN)) {
+  public move(canvas: HTMLCanvasElement): void {
+    if (this.keyListener.isKeyDown(KeyboardListener.KEY_DOWN)
+        && this.yPos + this.image.height < canvas.height
+    ) {
       this.yPos += this.velocity;
     }
 
-    if (this.keyListener.isKeyDown(KeyboardListener.KEY_UP)) {
+    if (this.keyListener.isKeyDown(KeyboardListener.KEY_UP)
+        && this.yPos > 0
+    ) {
       this.yPos -= this.velocity;
     }
 
-    if (this.keyListener.isKeyDown(KeyboardListener.KEY_RIGHT)) {
+    if (this.keyListener.isKeyDown(KeyboardListener.KEY_RIGHT)
+        && this.xPos + this.image.width < canvas.width
+    ) {
       this.xPos += this.velocity;
     }
 
-    if (this.keyListener.isKeyDown(KeyboardListener.KEY_LEFT)) {
+    if (this.keyListener.isKeyDown(KeyboardListener.KEY_LEFT)
+        && this.xPos > 0
+    ) {
       this.xPos -= this.velocity;
     }
+  }
+
+  /**
+   * Locks answer in
+   *
+   * @returns True when Space has been pressed
+   */
+  public lockAnswer(): boolean {
+    return this.keyListener.isKeyDown(KeyboardListener.KEY_SPACE);
+  }
+
+  /**
+   * Checks if circle collides with player
+   *
+   * @param circle circle
+   * @returns true if collides
+   */
+  public collidesWith(circle: Circle): boolean {
+    return this.xPos < circle.getXPos() + circle.getRadius()
+        && this.xPos + this.image.width > circle.getXPos()
+        && this.yPos < circle.getYPos() + circle.getRadius()
+        && this.xPos + this.image.height > circle.getYPos();
+  }
+
+  /**
+   * Damages player
+   *
+   * @param damage Amount of damage
+   */
+  public damageHP(damage: number): void {
+    this.health -= damage;
+    console.log(this.health);
+  }
+
+  /**
+   * Gets the HP
+   *
+   * @returns HP of the player
+   */
+  public getHP(): number {
+    return this.health;
+  }
+
+  /**
+   *
+   * @param canvas
+   */
+  public setXPos(canvas: HTMLCanvasElement): void {
+    this.xPos = canvas.width / 2;
+  }
+
+  /**
+   *
+   * @param canvas
+   */
+  public setYPos(canvas: HTMLCanvasElement): void {
+    this.yPos = canvas.height / 2;
   }
 
   /**
