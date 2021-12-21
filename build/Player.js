@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Game from './Game.js';
 import KeyboardListener from './KeyboardListener.js';
 export default class Player {
@@ -31,9 +30,5 @@ export default class Player {
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
     }
-=======
-export default class Player {
-    keyListener;
->>>>>>> b04dd653a5a7601a8f4e148766f04915d1baad9c
 }
 //# sourceMappingURL=Player.js.map

@@ -1,19 +1,14 @@
-<<<<<<< HEAD
 export default class KeyListener {
     static KEY_ENTER = 13;
     static KEY_SHIFT = 16;
     static KEY_CTRL = 17;
     static KEY_ALT = 18;
     static KEY_ESC = 27;
-=======
-export default class KeyboardListener {
->>>>>>> b04dd653a5a7601a8f4e148766f04915d1baad9c
     static KEY_SPACE = 32;
     static KEY_LEFT = 37;
     static KEY_UP = 38;
     static KEY_RIGHT = 39;
     static KEY_DOWN = 40;
-<<<<<<< HEAD
     static KEY_DEL = 46;
     static KEY_1 = 49;
     static KEY_2 = 50;
@@ -59,26 +54,9 @@ export default class KeyboardListener {
         window.addEventListener('keyup', (ev) => {
             this.keyCodeStates[ev.keyCode] = false;
         });
-=======
-    static KEY_R = 82;
-    keyCodeStates;
-    constructor() {
-        this.keyCodeStates = new Array();
-        window.addEventListener('keydown', this.keyDown);
-        window.addEventListener('keyup', this.keyUp);
->>>>>>> b04dd653a5a7601a8f4e148766f04915d1baad9c
     }
     isKeyDown(keyCode) {
         return this.keyCodeStates[keyCode] === true;
     }
-<<<<<<< HEAD
-=======
-    keyDown = (ev) => {
-        this.keyCodeStates[ev.keyCode] = true;
-    };
-    keyUp = (ev) => {
-        this.keyCodeStates[ev.keyCode] = false;
-    };
->>>>>>> b04dd653a5a7601a8f4e148766f04915d1baad9c
 }
 //# sourceMappingURL=KeyboardListener.js.map

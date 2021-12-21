@@ -1,5 +1,4 @@
 export default class Level {
-<<<<<<< HEAD
     pointsWorth;
     correctAnswer;
     question;
@@ -16,7 +15,5 @@ export default class Level {
         this.answerFour = answerFour;
         this.correctAnswer = correctAnswer;
     }
-=======
->>>>>>> b04dd653a5a7601a8f4e148766f04915d1baad9c
 }
 //# sourceMappingURL=Level.js.map
