@@ -102,16 +102,18 @@ export default class Player {
   }
 
   /**
+   * Sets x Position of the player
    *
-   * @param canvas
+   * @param canvas canvas element
    */
   public setXPos(canvas: HTMLCanvasElement): void {
     this.xPos = canvas.width / 2;
   }
 
   /**
+   * Sets y Position of the player
    *
-   * @param canvas
+   * @param canvas canvas element
    */
   public setYPos(canvas: HTMLCanvasElement): void {
     this.yPos = canvas.height / 2;

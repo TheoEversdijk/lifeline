@@ -1,8 +1,7 @@
-import Level from './Level.js';
+import Bossfight from './Bossfight.js';
 import Player from './Player.js';
 
 export default class Game {
-  // Properties for canvas and keyboard
   private canvas: HTMLCanvasElement;
 
   private ctx: CanvasRenderingContext2D;
@@ -11,7 +10,7 @@ export default class Game {
 
   private player: Player;
 
-  private level: Level;
+  private bossfight: Bossfight;
 
   private visBucks: number;
 
@@ -30,7 +29,7 @@ export default class Game {
     this.visBucks = 0;
 
     this.player = new Player(this.canvas);
-    this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
+    this.bossfight = new Bossfight(this.canvas);
 
     this.loop();
   }
@@ -39,7 +38,7 @@ export default class Game {
     this.handleKeyBoard();
     this.draw();
     if (this.player.lockAnswer()) {
-      this.level.answerSelect(this.player);
+      this.bossfight.answerSelect(this.player);
     }
 
     this.isCompleted();
@@ -55,14 +54,19 @@ export default class Game {
   }
 
   private isCompleted() {
-    if (this.level.getCompletion() === false) {
-      this.level.draw();
+    if (this.bossfight.getCompletion() === false) {
+      this.bossfight.draw();
     }
 
-    if (this.level.getCompletion() === true) {
-      this.level.setCompletion();
-      this.score += 10;
-      this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
+    if (this.bossfight.getCompletion() === true) {
+      this.bossfight.setCompletion();
+      this.visBucks += this.bossfight.getMoney();
+      this.bossfight = new Bossfight(this.canvas);
+    }
+
+    if (this.bossfight.getStatus() === true) {
+      this.score += this.bossfight.getPoints();
+      this.bossfight.setStatus();
     }
   }
 
@@ -72,6 +76,7 @@ export default class Game {
   private draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
+    this.bossfight.draw();
 
     // write the current score
     this.writeTextToCanvas(

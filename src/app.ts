@@ -2,9 +2,10 @@ import Game from './Game.js';
 
 const start = document.getElementById('button');
 const body = document.querySelector('body');
+const background = document.getElementById('background');
 
 const startGame = () => {
-  start.innerHTML = '';
+  body.innerHTML = '';
   const canvas = document.createElement('canvas');
   body.append(canvas);
   const game = new Game(canvas as HTMLCanvasElement);

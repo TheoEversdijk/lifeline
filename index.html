@@ -16,15 +16,35 @@
                 height: 100%;
                 vertical-align: middle;
                 display: table-cell;
+                background-image: url("../assets/images/backgrounds/startmenu.png");
+                background-size: cover;
             }
             #canvas {
                 border: 1px solid black
+            }
+            #button {
+                position: relative;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            #title h1 {
+                -webkit-text-stroke: 2px black;
+                position: relative;
+                font-family: Arial, Helvetica, sans-serif;
+                color: cyan;
+                font-size: 90px;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+
             }
         </style>
 
         <title>Lifeline</title>
     </head>
     <body>
+        <div id="title"><h1>LifeLine</h1></div>
         <div id="button"></div>
         <!-- <canvas id='canvas'></canvas> -->
         <script type='module' src='./build/app.js'></script>

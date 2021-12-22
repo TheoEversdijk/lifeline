@@ -1,134 +1,40 @@
-import Circle from './Circle.js';
-import Player from './Player.js';
-
 export default class Level {
-  private canvas: HTMLCanvasElement;
+  protected canvas: HTMLCanvasElement;
 
-  private ctx: CanvasRenderingContext2D;
+  protected ctx: CanvasRenderingContext2D;
 
-  private pointsWorth: number;
+  protected money: number;
 
-  private correctAnswer: string;
+  protected isCompleted: boolean;
 
-  private question: string;
+  protected questionDone: boolean;
 
-  private answers: string[];
-
-  private circles: Circle[];
-
-  private answerOne: string;
-
-  private answerTwo: string;
-
-  private answerThree: string;
-
-  private answerFour: string;
-
-  private isCompleted: boolean;
+  protected points: number;
 
   /**
-   * @param pointsworth How many points the question should reward if the answer is correct
-   * @param question The question to be answered
-   * @param answerOne Answer option one
-   * @param answerTwo Answer option two
-   * @param answerThree Answer option three
-   * @param answerFour Answer option four
-   * @param correctAnswer The correct answer
+   * @param money How many money the question should reward if the answer is correct
    * @param canvasId canvas ID
    */
   public constructor(
-    pointsworth: number,
-    question: string,
-    answerOne: string,
-    answerTwo: string,
-    answerThree: string,
-    answerFour: string,
-    correctAnswer: string,
+    money: number,
     canvasId: HTMLCanvasElement,
   ) {
-    this.pointsWorth = pointsworth;
-    this.question = question;
-    this.answerOne = answerOne;
-    this.answerTwo = answerTwo;
-    this.answerThree = answerThree;
-    this.answerFour = answerFour;
-    this.correctAnswer = correctAnswer;
+    this.money = money;
     this.isCompleted = false;
+    this.points = 0;
+    this.questionDone = false;
 
     this.canvas = canvasId;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
-    this.answers = [];
-    this.answers.push(this.answerOne, this.answerTwo, this.answerThree, this.answerFour);
-    this.circles = [];
-    this.answers.forEach((element, index) => {
-      this.circles.push(new Circle(
-        index,
-        (this.canvas.width / 4) + (index * 400),
-        this.canvas.height / 4,
-      ));
-    });
   }
 
-  /**
-   * Selects answer
-   *
-   * @param player Player
-   */
-  public answerSelect(player: Player): void {
-    let currentIndex: number;
-    this.circles.forEach((circle) => {
-      if (player.collidesWith(circle)) {
-        currentIndex = circle.getIndex();
-      }
-    });
-
-    this.answers.forEach((answer, index) => {
-      if (currentIndex === index) {
-        if (answer === this.correctAnswer) {
-          this.isCompleted = true;
-          player.setXPos(this.canvas);
-          player.setYPos(this.canvas);
-        } else {
-          console.log('wrong');
-          player.damageHP(10);
-          player.setXPos(this.canvas);
-          player.setYPos(this.canvas);
-          this.isCompleted = false;
-        }
-      }
-    });
-  }
-
-  /**
-   * Draw Level
-   */
-  public draw(): void {
-    this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
-
-    this.writeTextToCanvas(
-      `${this.question}?`,
-      40,
-      this.canvas.width / 2,
-      this.canvas.height / 1.25,
-    );
-
-    let spacing = 0;
-    this.answers.forEach((answer, index) => {
-      spacing += 40;
-      this.writeTextToCanvas(
-        `${index + 1} ${answer}`,
-        40,
-        this.canvas.width / 2,
-        this.canvas.height / 1.20 + spacing,
-      );
-
-      this.circles.forEach((circle) => {
-        circle.draw(this.ctx);
-      });
-    });
-  }
+  // /**
+  //  * Draw Level
+  //  */
+  // public draw(): void {
+  // }
 
   /**
    * Gets status
@@ -144,6 +50,40 @@ export default class Level {
    */
   public setCompletion(): void {
     this.isCompleted = false;
+  }
+
+  /**
+   * Test
+   *
+   * @returns status
+   */
+  public getStatus(): boolean {
+    return this.questionDone;
+  }
+
+  /**
+   * Test
+   */
+  public setStatus(): void {
+    this.questionDone = false;
+  }
+
+  /**
+   * Gets the points
+   *
+   * @returns Number of points
+   */
+  public getPoints(): number {
+    return this.points;
+  }
+
+  /**
+   * Money
+   *
+   * @returns Money
+   */
+  public getMoney(): number {
+    return this.money;
   }
 
   /**

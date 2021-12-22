@@ -1,11 +1,11 @@
-import Level from './Level.js';
+import Bossfight from './Bossfight.js';
 import Player from './Player.js';
 export default class Game {
     canvas;
     ctx;
     score;
     player;
-    level;
+    bossfight;
     visBucks;
     constructor(canvasId) {
         this.canvas = canvasId;
@@ -15,14 +15,14 @@ export default class Game {
         this.score = 0;
         this.visBucks = 0;
         this.player = new Player(this.canvas);
-        this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
+        this.bossfight = new Bossfight(this.canvas);
         this.loop();
     }
     loop = () => {
         this.handleKeyBoard();
         this.draw();
         if (this.player.lockAnswer()) {
-            this.level.answerSelect(this.player);
+            this.bossfight.answerSelect(this.player);
         }
         this.isCompleted();
         requestAnimationFrame(this.loop);
@@ -31,18 +31,23 @@ export default class Game {
         this.player.move(this.canvas);
     }
     isCompleted() {
-        if (this.level.getCompletion() === false) {
-            this.level.draw();
+        if (this.bossfight.getCompletion() === false) {
+            this.bossfight.draw();
         }
-        if (this.level.getCompletion() === true) {
-            this.level.setCompletion();
-            this.score += 10;
-            this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
+        if (this.bossfight.getCompletion() === true) {
+            this.bossfight.setCompletion();
+            this.visBucks += this.bossfight.getMoney();
+            this.bossfight = new Bossfight(this.canvas);
+        }
+        if (this.bossfight.getStatus() === true) {
+            this.score += this.bossfight.getPoints();
+            this.bossfight.setStatus();
         }
     }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.draw(this.ctx);
+        this.bossfight.draw();
         this.writeTextToCanvas(`Score: ${this.score}`, 40, this.canvas.width / 2, 50);
         this.writeTextToCanvas(`VisBuck: ${this.visBucks}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
