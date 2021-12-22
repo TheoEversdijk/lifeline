@@ -57,6 +57,7 @@ export default class Level {
         });
     }
     draw() {
+        this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
         this.writeTextToCanvas(`${this.question}?`, 40, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.answers.forEach((answer, index) => {

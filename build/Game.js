@@ -13,7 +13,7 @@ export default class Game {
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.score = 0;
-        this.visBucks = 420;
+        this.visBucks = 0;
         this.player = new Player(this.canvas);
         this.level = new Level(10, 'Wat is geen scam', 'Microsoft Tech Support ', 'Nigerian Prince', 'Je moeder', 'Amazon Customer Service', 'Je moeder', this.canvas);
         this.loop();

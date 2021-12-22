@@ -105,6 +105,8 @@ export default class Level {
    * Draw Level
    */
   public draw(): void {
+    this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
+
     this.writeTextToCanvas(
       `${this.question}?`,
       40,
