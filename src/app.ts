@@ -18,6 +18,7 @@ const startGame = () => {
 const init = () => {
   mainMenuTheme.load();
   mainMenuTheme.play();
+  mainMenuTheme.volume = 0.5;
   const button = document.createElement('button');
   button.innerHTML = 'Start Game';
   start.append(button);

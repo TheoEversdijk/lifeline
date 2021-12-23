@@ -19,6 +19,7 @@ export default class Bossfight extends Level {
         super(100, canvas);
         this.bgm.load();
         this.bgm.play();
+        this.bgm.volume = 0.5;
         this.question = ['Wie kan je niet vertrouwen?',
             'Wat doe je al je door een oplichter wordt gebeld?',
             'Wat doe je als je getuige bent van cyberpesten op Instagram?',
@@ -95,9 +96,10 @@ export default class Bossfight extends Level {
         if (this.index !== this.question.length + 1) {
             this.index += 1;
         }
-        console.log(this.currentAnswers);
-        console.log(this.correctAnswer);
         this.circleGenerator();
+    }
+    stopMusic() {
+        this.bgm.pause();
     }
     answerSelect(player) {
         let currentIndex;

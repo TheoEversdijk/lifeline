@@ -15,6 +15,8 @@ export default class Player {
 
   private image: HTMLImageElement;
 
+  private status: string;
+
   /**
    * Initialize player
    *
@@ -27,6 +29,7 @@ export default class Player {
     this.yPos = canvas.height / 2;
     this.velocity = 5;
     this.health = 100;
+    this.status = 'alive';
   }
 
   /**
@@ -89,6 +92,10 @@ export default class Player {
    */
   public damageHP(damage: number): void {
     this.health -= damage;
+    if (this.health === 0) {
+      this.status = 'dead';
+      console.log('You died');
+    }
     console.log(this.health);
   }
 
@@ -117,6 +124,15 @@ export default class Player {
    */
   public setYPos(canvas: HTMLCanvasElement): void {
     this.yPos = canvas.height / 2;
+  }
+
+  /**
+   * Gets the status of the player
+   *
+   * @returns status of player
+   */
+  public getStatus(): string {
+    return this.status;
   }
 
   /**

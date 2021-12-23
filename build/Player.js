@@ -7,6 +7,7 @@ export default class Player {
     velocity;
     health;
     image;
+    status;
     constructor(canvas) {
         this.keyListener = new KeyboardListener();
         this.image = Game.loadNewImage('./assets/images/fish/player.png');
@@ -14,6 +15,7 @@ export default class Player {
         this.yPos = canvas.height / 2;
         this.velocity = 5;
         this.health = 100;
+        this.status = 'alive';
     }
     move(canvas) {
         if (this.keyListener.isKeyDown(KeyboardListener.KEY_DOWN)
@@ -44,6 +46,10 @@ export default class Player {
     }
     damageHP(damage) {
         this.health -= damage;
+        if (this.health === 0) {
+            this.status = 'dead';
+            console.log('You died');
+        }
         console.log(this.health);
     }
     getHP() {
@@ -54,6 +60,9 @@ export default class Player {
     }
     setYPos(canvas) {
         this.yPos = canvas.height / 2;
+    }
+    getStatus() {
+        return this.status;
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);

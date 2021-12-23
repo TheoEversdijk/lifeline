@@ -43,7 +43,28 @@ export default class Game {
 
     this.isCompleted();
 
-    if (this.bossfight.getCompletion() !== true) {
+    if (this.player.getStatus() === 'dead') {
+      this.bossfight.stopMusic();
+      const death = new Audio('../assets/audio/sfx/gamelose.wav');
+      death.load();
+      death.play();
+      death.volume = 0.5;
+      this.ctx.beginPath();
+      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = 'red';
+      this.ctx.fill();
+      this.writeTextToCanvas(
+        'You died',
+        100,
+        this.canvas.width / 2,
+        this.canvas.height / 2,
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+    }
+
+    if (this.bossfight.getCompletion() !== true && this.player.getHP() !== 0) {
       requestAnimationFrame(this.loop);
     }
   };
@@ -63,7 +84,12 @@ export default class Game {
     if (this.bossfight.getCompletion() === true) {
       this.visBucks += this.bossfight.getMoney();
       this.draw();
+      const winner = new Audio('../assets/audio/sfx/gamewin.wav');
+      winner.load();
+      winner.volume = 0.5;
+      winner.play();
       setTimeout(() => {
+        winner.pause();
         this.bossfight.setCompletion();
         this.bossfight = new Bossfight(this.canvas);
         this.loop();
