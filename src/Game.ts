@@ -43,7 +43,9 @@ export default class Game {
 
     this.isCompleted();
 
-    requestAnimationFrame(this.loop);
+    if (this.bossfight.getCompletion() !== true) {
+      requestAnimationFrame(this.loop);
+    }
   };
 
   /**
@@ -59,9 +61,13 @@ export default class Game {
     }
 
     if (this.bossfight.getCompletion() === true) {
-      this.bossfight.setCompletion();
       this.visBucks += this.bossfight.getMoney();
-      this.bossfight = new Bossfight(this.canvas);
+      this.draw();
+      setTimeout(() => {
+        this.bossfight.setCompletion();
+        this.bossfight = new Bossfight(this.canvas);
+        this.loop();
+      }, 5000);
     }
 
     if (this.bossfight.getStatus() === true) {
@@ -97,6 +103,19 @@ export default class Game {
       this.canvas.width / 1.40,
       50,
     );
+
+    if (this.bossfight.getCompletion() === true) {
+      this.ctx.beginPath();
+      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = 'lightblue';
+      this.ctx.fill();
+      this.writeTextToCanvas(
+        'Level Complete',
+        100,
+        this.canvas.width / 2,
+        this.canvas.height / 2,
+      );
+    }
   }
 
   /**

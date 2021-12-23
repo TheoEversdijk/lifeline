@@ -9,10 +9,10 @@ export default class Player {
     image;
     constructor(canvas) {
         this.keyListener = new KeyboardListener();
-        this.image = Game.loadNewImage('../assets/images/fish/player.png');
+        this.image = Game.loadNewImage('./assets/images/fish/player.png');
         this.xPos = canvas.width / 2;
         this.yPos = canvas.height / 2;
-        this.velocity = 3;
+        this.velocity = 5;
         this.health = 100;
     }
     move(canvas) {

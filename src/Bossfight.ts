@@ -1,5 +1,4 @@
 import Circle from './Circle.js';
-import Game from './Game.js';
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -30,6 +29,8 @@ export default class Bossfight extends Level {
 
   private indexArray: number[];
 
+  private bgm: HTMLAudioElement = new Audio('./assets/audio/music/bossfight.mp3');
+
   /**
    * Initialize Bossfight
    *
@@ -37,6 +38,8 @@ export default class Bossfight extends Level {
    */
   public constructor(canvas: HTMLCanvasElement) {
     super(100, canvas);
+    this.bgm.load();
+    this.bgm.play();
     this.question = ['Wie kan je niet vertrouwen?',
       'Wat doe je al je door een oplichter wordt gebeld?',
       'Wat doe je als je getuige bent van cyberpesten op Instagram?',
@@ -149,10 +152,11 @@ export default class Bossfight extends Level {
           this.questionGenerator();
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
-          this.points += 10;
+          this.points = 10;
           this.questionDone = true;
           if (this.index > this.question.length) {
             this.isCompleted = true;
+            this.bgm.pause();
           }
         } else {
           console.log('wrong');
@@ -181,9 +185,14 @@ export default class Bossfight extends Level {
    * Draws the required items
    */
   public draw(): void {
-    this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
+    this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
 
+    this.ctx.beginPath();
+    this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
+    this.ctx.fillStyle = 'lightblue';
+    this.ctx.fill();
+    this.ctx.stroke();
     this.writeTextToCanvas(
       `${this.currentQuestion}`,
       40,

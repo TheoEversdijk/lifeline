@@ -14,8 +14,11 @@ export default class Bossfight extends Level {
     index;
     randomIndexArray;
     indexArray;
+    bgm = new Audio('./assets/audio/music/bossfight.mp3');
     constructor(canvas) {
         super(100, canvas);
+        this.bgm.load();
+        this.bgm.play();
         this.question = ['Wie kan je niet vertrouwen?',
             'Wat doe je al je door een oplichter wordt gebeld?',
             'Wat doe je als je getuige bent van cyberpesten op Instagram?',
@@ -110,10 +113,11 @@ export default class Bossfight extends Level {
                     this.questionGenerator();
                     player.setXPos(this.canvas);
                     player.setYPos(this.canvas);
-                    this.points += 10;
+                    this.points = 10;
                     this.questionDone = true;
                     if (this.index > this.question.length) {
                         this.isCompleted = true;
+                        this.bgm.pause();
                     }
                 }
                 else {
@@ -131,8 +135,13 @@ export default class Bossfight extends Level {
         });
     }
     draw() {
-        this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
+        this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
         this.canvas.style.backgroundSize = 'cover';
+        this.ctx.beginPath();
+        this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
+        this.ctx.fillStyle = 'lightblue';
+        this.ctx.fill();
+        this.ctx.stroke();
         this.writeTextToCanvas(`${this.currentQuestion}`, 40, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.currentAnswers.forEach((answer, index) => {

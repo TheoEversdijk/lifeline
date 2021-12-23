@@ -2,9 +2,10 @@ import Game from './Game.js';
 
 const start = document.getElementById('button');
 const body = document.querySelector('body');
-const background = document.getElementById('background');
+const mainMenuTheme = new Audio('../assets/audio/music/mainmenu.mp3');
 
 const startGame = () => {
+  mainMenuTheme.pause();
   body.innerHTML = '';
   const canvas = document.createElement('canvas');
   body.append(canvas);
@@ -15,6 +16,8 @@ const startGame = () => {
  * Start the game whenever the entire DOM is loaded
  */
 const init = () => {
+  mainMenuTheme.load();
+  mainMenuTheme.play();
   const button = document.createElement('button');
   button.innerHTML = 'Start Game';
   start.append(button);
