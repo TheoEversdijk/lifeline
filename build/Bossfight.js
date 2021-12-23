@@ -15,11 +15,9 @@ export default class Bossfight extends Level {
     randomIndexArray;
     indexArray;
     bgm = new Audio('./assets/audio/music/bossfight.mp3');
+    easterEgg = new Audio('./assets/audio/music/mega.mp3');
     constructor(canvas) {
         super(100, canvas);
-        this.bgm.load();
-        this.bgm.play();
-        this.bgm.volume = 0.5;
         this.question = ['Wie kan je niet vertrouwen?',
             'Wat doe je al je door een oplichter wordt gebeld?',
             'Wat doe je als je getuige bent van cyberpesten op Instagram?',
@@ -98,6 +96,18 @@ export default class Bossfight extends Level {
         }
         this.circleGenerator();
     }
+    playMusic() {
+        this.bgm.load();
+        this.bgm.play();
+        this.bgm.loop = true;
+        this.bgm.volume = 0.5;
+    }
+    easterEggMusic() {
+        this.easterEgg.load();
+        this.easterEgg.play();
+        this.easterEgg.loop = true;
+        this.easterEgg.volume = 0.5;
+    }
     stopMusic() {
         this.bgm.pause();
     }
@@ -133,7 +143,7 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
-            this.circles.push(new Circle(index, (this.canvas.width / 4) + (index * 400), this.canvas.height / 4));
+            this.circles.push(new Circle(index, (this.canvas.width / 8) + (index * 475), this.canvas.height / 4));
         });
     }
     draw() {
@@ -141,14 +151,14 @@ export default class Bossfight extends Level {
         this.canvas.style.backgroundSize = 'cover';
         this.ctx.beginPath();
         this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
-        this.ctx.fillStyle = 'lightblue';
+        this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
         this.ctx.fill();
         this.ctx.stroke();
-        this.writeTextToCanvas(`${this.currentQuestion}`, 40, this.canvas.width / 2, this.canvas.height / 1.25);
+        this.writeTextToCanvas(`${this.currentQuestion}`, 30, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.currentAnswers.forEach((answer, index) => {
             spacing += 40;
-            this.writeTextToCanvas(`${index + 1} ${answer}`, 40, this.canvas.width / 2, this.canvas.height / 1.20 + spacing);
+            this.writeTextToCanvas(`${index + 1} ${answer}`, 30, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
             this.circles.forEach((circle) => {
                 circle.draw(this.ctx);
             });

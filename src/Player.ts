@@ -17,6 +17,8 @@ export default class Player {
 
   private status: string;
 
+  private score: number;
+
   /**
    * Initialize player
    *
@@ -28,6 +30,7 @@ export default class Player {
     this.xPos = canvas.width / 2;
     this.yPos = canvas.height / 2;
     this.velocity = 5;
+    this.score = 0;
     this.health = 100;
     this.status = 'alive';
   }
@@ -133,6 +136,24 @@ export default class Player {
    */
   public getStatus(): string {
     return this.status;
+  }
+
+  /**
+   * Gets score
+   *
+   * @returns Score
+   */
+  public getScore(): number {
+    return this.score;
+  }
+
+  /**
+   * Sets score
+   *
+   * @param points Points per lvl
+   */
+  public setScore(points: number): void {
+    this.score += points;
   }
 
   /**

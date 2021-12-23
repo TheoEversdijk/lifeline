@@ -12,10 +12,10 @@ export default class Game {
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
-        this.score = 0;
         this.visBucks = 0;
         this.player = new Player(this.canvas);
         this.bossfight = new Bossfight(this.canvas);
+        this.bossfight.playMusic();
         this.loop();
     }
     loop = () => {
@@ -62,11 +62,17 @@ export default class Game {
                 winner.pause();
                 this.bossfight.setCompletion();
                 this.bossfight = new Bossfight(this.canvas);
+                if (this.player.getScore() >= 240) {
+                    this.bossfight.easterEggMusic();
+                }
+                else {
+                    this.bossfight.playMusic();
+                }
                 this.loop();
             }, 5000);
         }
         if (this.bossfight.getStatus() === true) {
-            this.score += this.bossfight.getPoints();
+            this.player.setScore(this.bossfight.getPoints());
             this.bossfight.setStatus();
         }
     }
@@ -74,7 +80,7 @@ export default class Game {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.draw(this.ctx);
         this.bossfight.draw();
-        this.writeTextToCanvas(`Score: ${this.score}`, 40, this.canvas.width / 2, 50);
+        this.writeTextToCanvas(`Score: ${this.player.getScore()}`, 40, this.canvas.width / 2, 50);
         this.writeTextToCanvas(`VisBuck: ${this.visBucks}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
         if (this.bossfight.getCompletion() === true) {

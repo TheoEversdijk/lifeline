@@ -8,12 +8,14 @@ export default class Player {
     health;
     image;
     status;
+    score;
     constructor(canvas) {
         this.keyListener = new KeyboardListener();
         this.image = Game.loadNewImage('./assets/images/fish/player.png');
         this.xPos = canvas.width / 2;
         this.yPos = canvas.height / 2;
         this.velocity = 5;
+        this.score = 0;
         this.health = 100;
         this.status = 'alive';
     }
@@ -63,6 +65,12 @@ export default class Player {
     }
     getStatus() {
         return this.status;
+    }
+    getScore() {
+        return this.score;
+    }
+    setScore(points) {
+        this.score += points;
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);
