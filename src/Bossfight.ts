@@ -79,7 +79,7 @@ export default class Bossfight extends Level {
     this.answerFour = ['Vreemdelingen.',
       'Ophangen.',
       'Ik pest mee.',
-      'Nee, je moet geen volgverzoeken accepteren.',
+      'Nee, je moet nooit volgverzoeken accepteren.',
       'Je stuurt een bericht terug naar die persoon.',
       'Niks is te geloven wat je op WhatsApp leest.',
       'Hem meteen blokkeren.',
