@@ -51,10 +51,10 @@ export default class Game {
       death.volume = 0.5;
       this.ctx.beginPath();
       this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.fillStyle = 'red';
+      this.ctx.fillStyle = 'darkred';
       this.ctx.fill();
       this.writeTextToCanvas(
-        'You died',
+        'Level Gefaald!',
         100,
         this.canvas.width / 2,
         this.canvas.height / 2,
@@ -141,7 +141,7 @@ export default class Game {
       this.ctx.fillStyle = 'lightblue';
       this.ctx.fill();
       this.writeTextToCanvas(
-        'Level Complete',
+        'Level Gehaald!',
         100,
         this.canvas.width / 2,
         this.canvas.height / 2,
