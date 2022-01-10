@@ -1,4 +1,5 @@
 import Circle from './Circle.js';
+import EnemyFishes from './enemyfishes.js';
 import Game from './Game.js';
 import KeyboardListener from './KeyboardListener.js';
 
@@ -27,8 +28,8 @@ export default class Player {
   public constructor(canvas: HTMLCanvasElement) {
     this.keyListener = new KeyboardListener();
     this.image = Game.loadNewImage('./assets/images/fish/player.png');
-    this.xPos = canvas.width / 2;
-    this.yPos = canvas.height / 2;
+    this.xPos = canvas.width / 1.1;
+    this.yPos = canvas.height / 2.5;
     this.velocity = 5;
     this.score = 0;
     this.health = 100;
@@ -89,6 +90,19 @@ export default class Player {
   }
 
   /**
+   * Checks if circle collides with player
+   *
+   * @param fish fishies
+   * @returns true if collides
+   */
+  public collidesWithFish(fish: EnemyFishes): boolean {
+    return this.xPos < fish.getXPos() + fish.getImage().width
+        && this.xPos + this.image.width > fish.getXPos()
+        && this.yPos < fish.getYPos() + fish.getImage().height
+        && this.xPos + this.image.height > fish.getYPos();
+  }
+
+  /**
    * Damages player
    *
    * @param damage Amount of damage
@@ -117,7 +131,7 @@ export default class Player {
    * @param canvas canvas element
    */
   public setXPos(canvas: HTMLCanvasElement): void {
-    this.xPos = canvas.width / 2;
+    this.xPos = canvas.width / 1.1;
   }
 
   /**
@@ -126,7 +140,7 @@ export default class Player {
    * @param canvas canvas element
    */
   public setYPos(canvas: HTMLCanvasElement): void {
-    this.yPos = canvas.height / 2;
+    this.yPos = canvas.height / 2.5;
   }
 
   /**

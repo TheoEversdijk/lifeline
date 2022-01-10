@@ -1,4 +1,5 @@
 import Circle from './Circle.js';
+import Game from './Game.js';
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -32,6 +33,8 @@ export default class Bossfight extends Level {
   private bgm: HTMLAudioElement = new Audio('./assets/audio/music/bossfight.mp3');
 
   private easterEgg: HTMLAudioElement = new Audio('./assets/audio/music/mega.mp3');
+
+  private boss: HTMLImageElement;
 
   /**
    * Initialize Bossfight
@@ -107,7 +110,11 @@ export default class Bossfight extends Level {
       this.randomIndexArray.push(this.indexArray[j]);
       this.indexArray.splice(j, 1);
     }
+    this.boss = Game.loadNewImage('./assets/images/fish/shark2.png');
     this.questionGenerator();
+    // this.circles.forEach((circle) => {
+    //   console.log(circle.getXPos(), circle.getYPos(), circle.getRadius(), circle.getIndex());
+    // });
   }
 
   /**
@@ -128,6 +135,7 @@ export default class Bossfight extends Level {
       this.index += 1;
     }
     this.circleGenerator();
+    console.log(this.circles);
   }
 
   /**
@@ -166,6 +174,7 @@ export default class Bossfight extends Level {
     let currentIndex: number;
     this.circles.forEach((circle) => {
       if (player.collidesWith(circle)) {
+        console.log(circle.getXPos(), circle.getYPos(), circle.getRadius(), circle.getIndex());
         currentIndex = circle.getIndex();
       }
     });
@@ -200,8 +209,8 @@ export default class Bossfight extends Level {
     this.currentAnswers.forEach((element, index) => {
       this.circles.push(new Circle(
         index,
-        (this.canvas.width / 8) + (index * 475),
-        this.canvas.height / 4,
+        this.canvas.width / 16,
+        (this.canvas.height / 8) + (index * 160),
       ));
     });
   }
@@ -212,15 +221,16 @@ export default class Bossfight extends Level {
   public draw(): void {
     this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
+    // this.ctx.drawImage(this.boss, this.canvas.width / 2.5, this.canvas.height / 12);
 
     this.ctx.beginPath();
-    this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
+    this.ctx.rect(0, this.canvas.height / 1.30, this.canvas.width, 350);
     this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
     this.ctx.fill();
     this.ctx.stroke();
     this.writeTextToCanvas(
       `${this.currentQuestion}`,
-      30,
+      25,
       this.canvas.width / 2,
       this.canvas.height / 1.25,
     );
@@ -230,14 +240,13 @@ export default class Bossfight extends Level {
       spacing += 40;
       this.writeTextToCanvas(
         `${index + 1} ${answer}`,
-        30,
+        25,
         this.canvas.width / 2,
         this.canvas.height / 1.24 + spacing,
       );
-
-      this.circles.forEach((circle) => {
-        circle.draw(this.ctx);
-      });
+    });
+    this.circles.forEach((circle) => {
+      circle.draw(this.ctx);
     });
   }
 }

@@ -17,7 +17,7 @@ export default class Circle {
         ctx.font = `${20}px sans-serif`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(`${this.index + 1}`, this.xPos, this.yPos);
+        ctx.fillText(`${this.index + 1}`, this.xPos - 1, this.yPos + 7);
     }
     getXPos() {
         return this.xPos;

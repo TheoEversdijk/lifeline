@@ -12,8 +12,8 @@ export default class Player {
     constructor(canvas) {
         this.keyListener = new KeyboardListener();
         this.image = Game.loadNewImage('./assets/images/fish/player.png');
-        this.xPos = canvas.width / 2;
-        this.yPos = canvas.height / 2;
+        this.xPos = canvas.width / 1.1;
+        this.yPos = canvas.height / 2.5;
         this.velocity = 5;
         this.score = 0;
         this.health = 100;
@@ -46,6 +46,12 @@ export default class Player {
             && this.yPos < circle.getYPos() + circle.getRadius()
             && this.xPos + this.image.height > circle.getYPos();
     }
+    collidesWithFish(fish) {
+        return this.xPos < fish.getXPos() + fish.getImage().width
+            && this.xPos + this.image.width > fish.getXPos()
+            && this.yPos < fish.getYPos() + fish.getImage().height
+            && this.xPos + this.image.height > fish.getYPos();
+    }
     damageHP(damage) {
         this.health -= damage;
         if (this.health === 0) {
@@ -58,10 +64,10 @@ export default class Player {
         return this.health;
     }
     setXPos(canvas) {
-        this.xPos = canvas.width / 2;
+        this.xPos = canvas.width / 1.1;
     }
     setYPos(canvas) {
-        this.yPos = canvas.height / 2;
+        this.yPos = canvas.height / 2.5;
     }
     getStatus() {
         return this.status;

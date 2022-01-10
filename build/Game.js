@@ -1,4 +1,5 @@
 import Bossfight from './Bossfight.js';
+import EnemyFishes from './enemyfishes.js';
 import Player from './Player.js';
 export default class Game {
     canvas;
@@ -6,6 +7,7 @@ export default class Game {
     score;
     player;
     bossfight;
+    enemyfishes;
     visBucks;
     constructor(canvasId) {
         this.canvas = canvasId;
@@ -16,10 +18,21 @@ export default class Game {
         this.player = new Player(this.canvas);
         this.bossfight = new Bossfight(this.canvas);
         this.bossfight.playMusic();
+        this.enemyfishes = [];
+        for (let i = 0; i < 3; i++) {
+            this.enemyfishes.push(new EnemyFishes(this.canvas));
+        }
         this.loop();
     }
     loop = () => {
         this.handleKeyBoard();
+        this.enemyfishes.forEach((fish) => {
+            fish.move();
+            if (this.player.collidesWithFish(fish)) {
+                this.player.damageHP(5);
+                this.player.setXPos(this.canvas);
+            }
+        });
         this.draw();
         if (this.player.lockAnswer()) {
             this.bossfight.answerSelect(this.player);
@@ -41,6 +54,9 @@ export default class Game {
             }, 5000);
         }
         if (this.bossfight.getCompletion() !== true && this.player.getHP() !== 0) {
+            this.enemyfishes.forEach((fish) => {
+                fish.outOfCanvas(this.canvas.width, this.canvas.height);
+            });
             requestAnimationFrame(this.loop);
         }
     };
@@ -80,6 +96,9 @@ export default class Game {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.player.draw(this.ctx);
         this.bossfight.draw();
+        this.enemyfishes.forEach((fish) => {
+            fish.draw(this.ctx);
+        });
         this.writeTextToCanvas(`Score: ${this.player.getScore()}`, 40, this.canvas.width / 2, 50);
         this.writeTextToCanvas(`VisBuck: ${this.visBucks}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);

@@ -1,4 +1,5 @@
 import Bossfight from './Bossfight.js';
+import EnemyFishes from './enemyfishes.js';
 import Player from './Player.js';
 
 export default class Game {
@@ -11,6 +12,8 @@ export default class Game {
   private player: Player;
 
   private bossfight: Bossfight;
+
+  private enemyfishes: EnemyFishes[];
 
   private visBucks: number;
 
@@ -30,12 +33,23 @@ export default class Game {
     this.player = new Player(this.canvas);
     this.bossfight = new Bossfight(this.canvas);
     this.bossfight.playMusic();
+    this.enemyfishes = [];
+    for (let i = 0; i < 3; i++) {
+      this.enemyfishes.push(new EnemyFishes(this.canvas));
+    }
 
     this.loop();
   }
 
   private loop = () => {
     this.handleKeyBoard();
+    this.enemyfishes.forEach((fish) => {
+      fish.move();
+      if (this.player.collidesWithFish(fish)) {
+        this.player.damageHP(5);
+        this.player.setXPos(this.canvas);
+      }
+    });
     this.draw();
     if (this.player.lockAnswer()) {
       this.bossfight.answerSelect(this.player);
@@ -65,6 +79,9 @@ export default class Game {
     }
 
     if (this.bossfight.getCompletion() !== true && this.player.getHP() !== 0) {
+      this.enemyfishes.forEach((fish) => {
+        fish.outOfCanvas(this.canvas.width, this.canvas.height);
+      });
       requestAnimationFrame(this.loop);
     }
   };
@@ -75,6 +92,24 @@ export default class Game {
   private handleKeyBoard() {
     this.player.move(this.canvas);
   }
+
+  // private levelCompleted() {
+  //   const winner = new Audio('../assets/audio/sfx/gamewin.wav');
+  //   winner.load();
+  //   winner.volume = 0.5;
+  //   winner.play();
+  //   setTimeout(() => {
+  //     winner.pause();
+  //     this.bossfight.setCompletion();
+  //     this.bossfight = new Bossfight(this.canvas);
+  //     if (this.player.getScore() >= 240) {
+  //       this.bossfight.easterEggMusic();
+  //     } else {
+  //       this.bossfight.playMusic();
+  //     }
+  //     this.loop();
+  //   }, 5000);
+  // }
 
   private isCompleted() {
     if (this.bossfight.getCompletion() === false) {
@@ -114,6 +149,9 @@ export default class Game {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
     this.bossfight.draw();
+    this.enemyfishes.forEach((fish) => {
+      fish.draw(this.ctx);
+    });
 
     // write the current score
     this.writeTextToCanvas(

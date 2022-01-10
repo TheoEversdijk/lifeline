@@ -1,4 +1,5 @@
 import Circle from './Circle.js';
+import Game from './Game.js';
 import Level from './Level.js';
 export default class Bossfight extends Level {
     circles;
@@ -16,6 +17,7 @@ export default class Bossfight extends Level {
     indexArray;
     bgm = new Audio('./assets/audio/music/bossfight.mp3');
     easterEgg = new Audio('./assets/audio/music/mega.mp3');
+    boss;
     constructor(canvas) {
         super(100, canvas);
         this.question = ['Wie kan je niet vertrouwen?',
@@ -84,6 +86,7 @@ export default class Bossfight extends Level {
             this.randomIndexArray.push(this.indexArray[j]);
             this.indexArray.splice(j, 1);
         }
+        this.boss = Game.loadNewImage('./assets/images/fish/shark2.png');
         this.questionGenerator();
     }
     questionGenerator() {
@@ -95,6 +98,7 @@ export default class Bossfight extends Level {
             this.index += 1;
         }
         this.circleGenerator();
+        console.log(this.circles);
     }
     playMusic() {
         this.bgm.load();
@@ -115,6 +119,7 @@ export default class Bossfight extends Level {
         let currentIndex;
         this.circles.forEach((circle) => {
             if (player.collidesWith(circle)) {
+                console.log(circle.getXPos(), circle.getYPos(), circle.getRadius(), circle.getIndex());
                 currentIndex = circle.getIndex();
             }
         });
@@ -143,26 +148,26 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
-            this.circles.push(new Circle(index, (this.canvas.width / 8) + (index * 475), this.canvas.height / 4));
+            this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160)));
         });
     }
     draw() {
         this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
         this.canvas.style.backgroundSize = 'cover';
         this.ctx.beginPath();
-        this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
+        this.ctx.rect(0, this.canvas.height / 1.30, this.canvas.width, 350);
         this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
         this.ctx.fill();
         this.ctx.stroke();
-        this.writeTextToCanvas(`${this.currentQuestion}`, 30, this.canvas.width / 2, this.canvas.height / 1.25);
+        this.writeTextToCanvas(`${this.currentQuestion}`, 25, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.currentAnswers.forEach((answer, index) => {
             spacing += 40;
-            this.writeTextToCanvas(`${index + 1} ${answer}`, 30, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
-            this.circles.forEach((circle) => {
-                circle.draw(this.ctx);
-            });
+            this.writeTextToCanvas(`${index + 1} ${answer}`, 25, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
+        });
+        this.circles.forEach((circle) => {
+            circle.draw(this.ctx);
         });
     }
 }
-//# sourceMappingURL=Bossfight.js.map
+//# sourceMappingURL=BossFight.js.map
