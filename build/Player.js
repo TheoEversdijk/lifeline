@@ -37,7 +37,7 @@ export default class Player {
             this.xPos -= this.velocity;
         }
     }
-    lockAnswer() {
+    select() {
         return this.keyListener.isKeyDown(KeyboardListener.KEY_SPACE);
     }
     collidesWith(circle) {
@@ -45,6 +45,12 @@ export default class Player {
             && this.xPos + this.image.width > circle.getXPos()
             && this.yPos < circle.getYPos() + circle.getRadius()
             && this.xPos + this.image.height > circle.getYPos();
+    }
+    collidesWithCheckpoint(checkpoint) {
+        return this.xPos < checkpoint.getXPos() + checkpoint.getRadius()
+            && this.xPos + this.image.width > checkpoint.getXPos()
+            && this.yPos < checkpoint.getYPos() + checkpoint.getRadius()
+            && this.xPos + this.image.height > checkpoint.getYPos();
     }
     damageHP(damage) {
         this.health -= damage;

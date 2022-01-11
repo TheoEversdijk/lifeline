@@ -1,4 +1,4 @@
-import Bossfight from './Bossfight.js';
+import LevelSelector from './LevelSelector.js';
 import Player from './Player.js';
 export default class Game {
     canvas;
@@ -6,24 +6,33 @@ export default class Game {
     score;
     player;
     bossfight;
+    levelSelector;
     visBucks;
+    status;
     constructor(canvasId) {
         this.canvas = canvasId;
         this.canvas.width = window.innerWidth;
         this.canvas.height = window.innerHeight;
         this.ctx = this.canvas.getContext('2d');
         this.visBucks = 0;
+        this.status = false;
         this.player = new Player(this.canvas);
+<<<<<<< Updated upstream
         this.bossfight = new Bossfight(this.canvas);
         this.bossfight.playMusic();
+=======
+        this.levelSelector = new LevelSelector(this.canvas);
+>>>>>>> Stashed changes
         this.loop();
     }
     loop = () => {
         this.handleKeyBoard();
         this.draw();
-        if (this.player.lockAnswer()) {
-            this.bossfight.answerSelect(this.player);
+        if (this.player.select()) {
+            this.levelSelector.selectLevel(this.player);
+            this.status = true;
         }
+<<<<<<< Updated upstream
         this.isCompleted();
         if (this.player.getStatus() === 'dead') {
             this.bossfight.stopMusic();
@@ -43,10 +52,14 @@ export default class Game {
         if (this.bossfight.getCompletion() !== true && this.player.getHP() !== 0) {
             requestAnimationFrame(this.loop);
         }
+=======
+        requestAnimationFrame(this.loop);
+>>>>>>> Stashed changes
     };
     handleKeyBoard() {
         this.player.move(this.canvas);
     }
+<<<<<<< Updated upstream
     isCompleted() {
         if (this.bossfight.getCompletion() === false) {
             this.bossfight.draw();
@@ -81,6 +94,18 @@ export default class Game {
         this.player.draw(this.ctx);
         this.bossfight.draw();
         this.writeTextToCanvas(`Score: ${this.player.getScore()}`, 40, this.canvas.width / 2, 50);
+=======
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.player.draw(this.ctx);
+        if (this.status === false) {
+            this.levelSelector.draw(this.ctx);
+        }
+        if (this.status === true) {
+            this.levelSelector.levelDrawer();
+        }
+        this.writeTextToCanvas(`Score: ${this.score}`, 40, this.canvas.width / 2, 50);
+>>>>>>> Stashed changes
         this.writeTextToCanvas(`VisBuck: ${this.visBucks}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
         if (this.bossfight.getCompletion() === true) {

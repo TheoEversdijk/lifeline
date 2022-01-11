@@ -1,3 +1,4 @@
+import Checkpoint from './Checkpoint.js';
 import Circle from './Circle.js';
 import Game from './Game.js';
 import KeyboardListener from './KeyboardListener.js';
@@ -71,7 +72,7 @@ export default class Player {
    *
    * @returns True when Space has been pressed
    */
-  public lockAnswer(): boolean {
+  public select(): boolean {
     return this.keyListener.isKeyDown(KeyboardListener.KEY_SPACE);
   }
 
@@ -86,6 +87,19 @@ export default class Player {
         && this.xPos + this.image.width > circle.getXPos()
         && this.yPos < circle.getYPos() + circle.getRadius()
         && this.xPos + this.image.height > circle.getYPos();
+  }
+
+  /**
+   * Checks if player collides with checkpoint
+   *
+   * @param checkpoint checkpoints
+   * @returns true of collides
+   */
+  public collidesWithCheckpoint(checkpoint: Checkpoint): boolean {
+    return this.xPos < checkpoint.getXPos() + checkpoint.getRadius()
+        && this.xPos + this.image.width > checkpoint.getXPos()
+        && this.yPos < checkpoint.getYPos() + checkpoint.getRadius()
+        && this.xPos + this.image.height > checkpoint.getYPos();
   }
 
   /**
