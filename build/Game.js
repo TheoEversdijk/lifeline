@@ -19,7 +19,7 @@ export default class Game {
         this.bossfight = new Bossfight(this.canvas);
         this.bossfight.playMusic();
         this.enemyfishes = [];
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
             this.enemyfishes.push(new EnemyFishes(this.canvas));
         }
         this.loop();
