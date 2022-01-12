@@ -1,7 +1,7 @@
 import RoundObject from './RoundObject.js';
-export default class Circle extends RoundObject {
+export default class Checkpoint extends RoundObject {
     constructor(index, xPos, yPos) {
-        super(index, xPos, yPos, 50);
+        super(index, xPos, yPos, 35);
     }
     draw(ctx) {
         ctx.beginPath();
@@ -12,7 +12,7 @@ export default class Circle extends RoundObject {
         ctx.font = `${20}px sans-serif`;
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-        ctx.fillText(`${this.index + 1}`, this.xPos, this.yPos + 7);
+        ctx.fillText(`Level ${this.index + 1}`, this.xPos, this.yPos + 7);
     }
 }
-//# sourceMappingURL=Circle.js.map
+//# sourceMappingURL=Checkpoint.js.map
