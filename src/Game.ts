@@ -1,4 +1,4 @@
-import LevelSelector from './LevelSelector.js';
+import Bossfight from './Bossfight.js';
 import Player from './Player.js';
 
 export default class Game {
@@ -6,9 +6,13 @@ export default class Game {
 
   private ctx: CanvasRenderingContext2D;
 
+  private score: number;
+
   private player: Player;
 
-  private levelSelector: LevelSelector;
+  private bossfight: Bossfight;
+
+  private visBucks: number;
 
   /**
    * Initialize the Game
@@ -18,12 +22,14 @@ export default class Game {
   public constructor(canvasId: HTMLCanvasElement) {
     // Construct all of the canvas
     this.canvas = canvasId;
-    this.canvas.width = 1800;
-    this.canvas.height = 900;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext('2d');
+    this.visBucks = 0;
 
     this.player = new Player(this.canvas);
-    this.levelSelector = new LevelSelector(this.canvas);
+    this.bossfight = new Bossfight(this.canvas);
+    this.bossfight.playMusic();
 
     this.loop();
   }
@@ -31,45 +37,93 @@ export default class Game {
   private loop = () => {
     this.handleKeyBoard();
     this.draw();
-    this.player.currentStatus();
-    if (this.player.select() && this.levelSelector.getLevelStatus() === false) {
-      this.levelSelector.select(this.player);
+    if (this.player.lockAnswer()) {
+      this.bossfight.answerSelect(this.player);
     }
-    if (this.player.select() && this.levelSelector.getLevelStatus() === true) {
-      this.levelSelector.answerSelector(this.player, this.ctx);
+
+    this.isCompleted();
+
+    if (this.player.getStatus() === 'dead') {
+      this.bossfight.stopMusic();
+      const death = new Audio('../assets/audio/sfx/gamelose.wav');
+      death.load();
+      death.play();
+      death.volume = 0.5;
+      this.ctx.beginPath();
+      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = 'darkred';
+      this.ctx.fill();
+      this.writeTextToCanvas(
+        'Level Gefaald!',
+        100,
+        this.canvas.width / 2,
+        this.canvas.height / 2,
+      );
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
     }
-    requestAnimationFrame(this.loop);
+
+    if (this.bossfight.getCompletion() !== true && this.player.getHP() !== 0) {
+      requestAnimationFrame(this.loop);
+    }
   };
 
   /**
-   * Handle the UP key on the keyboard to give the player the ability to move the HZ bird up
+   * Handle the UP key on the keyboard to give the player the ability to move the fish up
    */
   private handleKeyBoard() {
     this.player.move(this.canvas);
   }
 
+  private isCompleted() {
+    if (this.bossfight.getCompletion() === false) {
+      this.bossfight.draw();
+    }
+
+    if (this.bossfight.getCompletion() === true) {
+      this.visBucks += this.bossfight.getMoney();
+      this.draw();
+      const winner = new Audio('../assets/audio/sfx/gamewin.wav');
+      winner.load();
+      winner.volume = 0.5;
+      winner.play();
+      setTimeout(() => {
+        winner.pause();
+        this.bossfight.setCompletion();
+        this.bossfight = new Bossfight(this.canvas);
+        if (this.player.getScore() >= 240) {
+          this.bossfight.easterEggMusic();
+        } else {
+          this.bossfight.playMusic();
+        }
+        this.loop();
+      }, 5000);
+    }
+
+    if (this.bossfight.getStatus() === true) {
+      this.player.setScore(this.bossfight.getPoints());
+      this.bossfight.setStatus();
+    }
+  }
+
   /**
    * Draws all the necessary elements to the canvas
    */
-  public draw(): void {
+  private draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
-    if (this.levelSelector.getLevelStatus() === false) {
-      this.levelSelector.draw(this.ctx);
-    }
-    if (this.levelSelector.getLevelStatus() === true) {
-      this.levelSelector.levelDrawer(this.player, this.ctx);
-    }
+    this.bossfight.draw();
 
     // write the current score
     this.writeTextToCanvas(
-      `Score: ${this.player.getPoints()}`,
+      `Score: ${this.player.getScore()}`,
       40,
       this.canvas.width / 2,
       50,
     );
     this.writeTextToCanvas(
-      `VisBuck: ${this.player.getCoins()}`,
+      `VisBuck: ${this.visBucks}`,
       40,
       this.canvas.width / 4,
       50,
@@ -81,21 +135,7 @@ export default class Game {
       50,
     );
 
-    if (this.player.getStatus() === 'dead') {
-      this.levelSelector.loser(this.player);
-      this.ctx.beginPath();
-      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.fillStyle = 'darkred';
-      this.ctx.fill();
-      this.writeTextToCanvas(
-        'Level Gefaald!',
-        100,
-        this.canvas.width / 2,
-        this.canvas.height / 2,
-      );
-    }
-
-    if (this.levelSelector.getCompletion() === true) {
+    if (this.bossfight.getCompletion() === true) {
       this.ctx.beginPath();
       this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.fillStyle = 'lightblue';

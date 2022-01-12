@@ -1,5 +1,4 @@
 import Circle from './Circle.js';
-import EnemyFishes from './enemyfishes.js';
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -30,7 +29,9 @@ export default class Bossfight extends Level {
 
   private indexArray: number[];
 
-  private enemyfishes: EnemyFishes[];
+  private bgm: HTMLAudioElement = new Audio('./assets/audio/music/bossfight.mp3');
+
+  private easterEgg: HTMLAudioElement = new Audio('./assets/audio/music/mega.mp3');
 
   /**
    * Initialize Bossfight
@@ -39,7 +40,6 @@ export default class Bossfight extends Level {
    */
   public constructor(canvas: HTMLCanvasElement) {
     super(100, canvas);
-    this.isCompleted = false;
     this.question = ['Wie kan je niet vertrouwen?',
       'Wat doe je al je door een oplichter gebeld wordt?',
       'Wat doe je als iemand gecyberpest wordt?',
@@ -107,11 +107,6 @@ export default class Bossfight extends Level {
       this.randomIndexArray.push(this.indexArray[j]);
       this.indexArray.splice(j, 1);
     }
-    console.log(this.randomIndexArray);
-    this.enemyfishes = [];
-    for (let k = 0; k < 4; k++) {
-      this.enemyfishes.push(new EnemyFishes(this.canvas));
-    }
     this.questionGenerator();
   }
 
@@ -119,7 +114,6 @@ export default class Bossfight extends Level {
    * Generates questions
    */
   public questionGenerator(): void {
-    console.log(this.index);
     this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
     this.currentQuestion = this.question[this.randomIndexArray[this.index]];
 
@@ -131,27 +125,36 @@ export default class Bossfight extends Level {
       this.answerFour[this.randomIndexArray[this.index]],
     );
     if (this.index !== this.question.length + 1) {
-      if (this.index <= 8) {
-        this.index += 1;
-      }
+      this.index += 1;
     }
-    console.log(this.index);
     this.circleGenerator();
   }
 
   /**
-   * Resets level
+   * Plays music
    */
-  public reset(): void {
-    this.isCompleted = false;
+  public playMusic(): void {
+    this.bgm.load();
+    this.bgm.play();
+    this.bgm.loop = true;
+    this.bgm.volume = 0.5;
   }
 
   /**
-   * Resets index
+   * Plays easterEgg music
    */
-  public resetIndex(): void {
-    this.index = 0;
-    this.questionGenerator();
+  public easterEggMusic(): void {
+    this.easterEgg.load();
+    this.easterEgg.play();
+    this.easterEgg.loop = true;
+    this.easterEgg.volume = 0.5;
+  }
+
+  /**
+   * Stops the music
+   */
+  public stopMusic(): void {
+    this.bgm.pause();
   }
 
   /**
@@ -174,10 +177,11 @@ export default class Bossfight extends Level {
           this.questionGenerator();
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
-          player.addPoints(10);
+          this.points = 10;
           this.questionDone = true;
           if (this.index > this.question.length) {
             this.isCompleted = true;
+            this.bgm.pause();
           }
         } else {
           console.log('wrong');
@@ -196,28 +200,18 @@ export default class Bossfight extends Level {
     this.currentAnswers.forEach((element, index) => {
       this.circles.push(new Circle(
         index,
-        this.canvas.width / 16,
-        (this.canvas.height / 8) + (index * 160),
+        (this.canvas.width / 8) + (index * 475),
+        this.canvas.height / 4,
       ));
     });
   }
 
   /**
    * Draws the required items
-   *
-   * @param player player
-   * @param ctx canvas renderer
    */
-  public draw(player: Player, ctx: CanvasRenderingContext2D): void {
+  public draw(): void {
     this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
-
-    this.enemyfishes.forEach((enemyfish) => {
-      enemyfish.draw(ctx);
-      player.collidesWithFish(this.canvas, enemyfish);
-      enemyfish.move();
-      enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
-    });
 
     this.ctx.beginPath();
     this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
