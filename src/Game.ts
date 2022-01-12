@@ -1,4 +1,7 @@
+<<<<<<< Updated upstream
 import Bossfight from './Bossfight.js';
+=======
+>>>>>>> Stashed changes
 import LevelSelector from './LevelSelector.js';
 import Player from './Player.js';
 
@@ -7,15 +10,17 @@ export default class Game {
 
   private ctx: CanvasRenderingContext2D;
 
-  private score: number;
-
   private player: Player;
 
+<<<<<<< Updated upstream
   private bossfight: Bossfight;
 
   private levelSelector: LevelSelector;
 
   private visBucks: number;
+=======
+  private levelSelector: LevelSelector;
+>>>>>>> Stashed changes
 
   private status: boolean;
 
@@ -27,9 +32,10 @@ export default class Game {
   public constructor(canvasId: HTMLCanvasElement) {
     // Construct all of the canvas
     this.canvas = canvasId;
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
+    this.canvas.width = 1800;
+    this.canvas.height = 900;
     this.ctx = this.canvas.getContext('2d');
+<<<<<<< Updated upstream
     this.visBucks = 0;
     this.status = false;
 
@@ -41,6 +47,11 @@ export default class Game {
     this.levelSelector = new LevelSelector(this.canvas);
     // this.bossfight = new Bossfight(this.canvas);
 >>>>>>> Stashed changes
+=======
+
+    this.player = new Player(this.canvas);
+    this.levelSelector = new LevelSelector(this.canvas);
+>>>>>>> Stashed changes
 
     this.loop();
   }
@@ -48,6 +59,7 @@ export default class Game {
   private loop = () => {
     this.handleKeyBoard();
     this.draw();
+<<<<<<< Updated upstream
     if (this.player.select()) {
       this.levelSelector.selectLevel(this.player);
       this.status = true;
@@ -82,6 +94,15 @@ export default class Game {
       requestAnimationFrame(this.loop);
     }
 =======
+=======
+    this.player.currentStatus();
+    if (this.player.select() && this.levelSelector.getLevelStatus() === false) {
+      this.levelSelector.select(this.player);
+    }
+    if (this.player.select() && this.levelSelector.getLevelStatus() === true) {
+      this.levelSelector.answerSelector(this.player, this.ctx);
+    }
+>>>>>>> Stashed changes
     requestAnimationFrame(this.loop);
 >>>>>>> Stashed changes
   };
@@ -93,6 +114,7 @@ export default class Game {
     this.player.move(this.canvas);
   }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   private isCompleted() {
     if (this.bossfight.getCompletion() === false) {
@@ -127,28 +149,42 @@ export default class Game {
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   /**
    * Draws all the necessary elements to the canvas
    */
   public draw(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.player.draw(this.ctx);
+<<<<<<< Updated upstream
     if (this.status === false) {
       this.levelSelector.draw(this.ctx);
     }
     if (this.status === true) {
       this.levelSelector.levelDrawer();
+=======
+    if (this.levelSelector.getLevelStatus() === false) {
+      this.levelSelector.draw(this.ctx);
+    }
+    if (this.levelSelector.getLevelStatus() === true) {
+      this.levelSelector.levelDrawer(this.player, this.ctx);
+>>>>>>> Stashed changes
     }
 
     // write the current score
     this.writeTextToCanvas(
+<<<<<<< Updated upstream
       `Score: ${this.player.getScore()}`,
+=======
+      `Score: ${this.player.getPoints()}`,
+>>>>>>> Stashed changes
       40,
       this.canvas.width / 2,
       50,
     );
     this.writeTextToCanvas(
-      `VisBuck: ${this.visBucks}`,
+      `VisBuck: ${this.player.getCoins()}`,
       40,
       this.canvas.width / 4,
       50,
@@ -160,7 +196,25 @@ export default class Game {
       50,
     );
 
+<<<<<<< Updated upstream
     if (this.bossfight.getCompletion() === true) {
+=======
+    if (this.player.getStatus() === 'dead') {
+      this.levelSelector.loser(this.player);
+      this.ctx.beginPath();
+      this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = 'darkred';
+      this.ctx.fill();
+      this.writeTextToCanvas(
+        'Level Gefaald!',
+        100,
+        this.canvas.width / 2,
+        this.canvas.height / 2,
+      );
+    }
+
+    if (this.levelSelector.getCompletion() === true) {
+>>>>>>> Stashed changes
       this.ctx.beginPath();
       this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
       this.ctx.fillStyle = 'lightblue';

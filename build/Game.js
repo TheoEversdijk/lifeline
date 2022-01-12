@@ -3,17 +3,21 @@ import Player from './Player.js';
 export default class Game {
     canvas;
     ctx;
-    score;
     player;
+<<<<<<< Updated upstream
     bossfight;
     levelSelector;
     visBucks;
     status;
+=======
+    levelSelector;
+>>>>>>> Stashed changes
     constructor(canvasId) {
         this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = 1800;
+        this.canvas.height = 900;
         this.ctx = this.canvas.getContext('2d');
+<<<<<<< Updated upstream
         this.visBucks = 0;
         this.status = false;
         this.player = new Player(this.canvas);
@@ -23,11 +27,16 @@ export default class Game {
 =======
         this.levelSelector = new LevelSelector(this.canvas);
 >>>>>>> Stashed changes
+=======
+        this.player = new Player(this.canvas);
+        this.levelSelector = new LevelSelector(this.canvas);
+>>>>>>> Stashed changes
         this.loop();
     }
     loop = () => {
         this.handleKeyBoard();
         this.draw();
+<<<<<<< Updated upstream
         if (this.player.select()) {
             this.levelSelector.selectLevel(this.player);
             this.status = true;
@@ -53,12 +62,22 @@ export default class Game {
             requestAnimationFrame(this.loop);
         }
 =======
+=======
+        this.player.currentStatus();
+        if (this.player.select() && this.levelSelector.getLevelStatus() === false) {
+            this.levelSelector.select(this.player);
+        }
+        if (this.player.select() && this.levelSelector.getLevelStatus() === true) {
+            this.levelSelector.answerSelector(this.player, this.ctx);
+        }
+>>>>>>> Stashed changes
         requestAnimationFrame(this.loop);
 >>>>>>> Stashed changes
     };
     handleKeyBoard() {
         this.player.move(this.canvas);
     }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     isCompleted() {
         if (this.bossfight.getCompletion() === false) {
@@ -109,6 +128,29 @@ export default class Game {
         this.writeTextToCanvas(`VisBuck: ${this.visBucks}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
         if (this.bossfight.getCompletion() === true) {
+=======
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.player.draw(this.ctx);
+        if (this.levelSelector.getLevelStatus() === false) {
+            this.levelSelector.draw(this.ctx);
+        }
+        if (this.levelSelector.getLevelStatus() === true) {
+            this.levelSelector.levelDrawer(this.player, this.ctx);
+        }
+        this.writeTextToCanvas(`Score: ${this.player.getPoints()}`, 40, this.canvas.width / 2, 50);
+        this.writeTextToCanvas(`VisBuck: ${this.player.getCoins()}`, 40, this.canvas.width / 4, 50);
+        this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
+        if (this.player.getStatus() === 'dead') {
+            this.levelSelector.loser(this.player);
+            this.ctx.beginPath();
+            this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.fillStyle = 'darkred';
+            this.ctx.fill();
+            this.writeTextToCanvas('Level Gefaald!', 100, this.canvas.width / 2, this.canvas.height / 2);
+        }
+        if (this.levelSelector.getCompletion() === true) {
+>>>>>>> Stashed changes
             this.ctx.beginPath();
             this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
             this.ctx.fillStyle = 'lightblue';

@@ -1,4 +1,8 @@
 import Circle from './Circle.js';
+<<<<<<< Updated upstream:src/BossFight.ts
+=======
+import EnemyFishes from './enemyfishes.js';
+>>>>>>> Stashed changes:src/Bossfight.ts
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -29,9 +33,13 @@ export default class Bossfight extends Level {
 
   private indexArray: number[];
 
+<<<<<<< Updated upstream:src/BossFight.ts
   private bgm: HTMLAudioElement = new Audio('./assets/audio/music/bossfight.mp3');
 
   private easterEgg: HTMLAudioElement = new Audio('./assets/audio/music/mega.mp3');
+=======
+  private enemyfishes: EnemyFishes[];
+>>>>>>> Stashed changes:src/Bossfight.ts
 
   /**
    * Initialize Bossfight
@@ -40,6 +48,7 @@ export default class Bossfight extends Level {
    */
   public constructor(canvas: HTMLCanvasElement) {
     super(100, canvas);
+    this.isCompleted = false;
     this.question = ['Wie kan je niet vertrouwen?',
       'Wat doe je al je door een oplichter gebeld wordt?',
       'Wat doe je als iemand gecyberpest wordt?',
@@ -107,6 +116,11 @@ export default class Bossfight extends Level {
       this.randomIndexArray.push(this.indexArray[j]);
       this.indexArray.splice(j, 1);
     }
+    console.log(this.randomIndexArray);
+    this.enemyfishes = [];
+    for (let k = 0; k < 4; k++) {
+      this.enemyfishes.push(new EnemyFishes(this.canvas));
+    }
     this.questionGenerator();
   }
 
@@ -114,6 +128,7 @@ export default class Bossfight extends Level {
    * Generates questions
    */
   public questionGenerator(): void {
+    console.log(this.index);
     this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
     this.currentQuestion = this.question[this.randomIndexArray[this.index]];
 
@@ -125,12 +140,19 @@ export default class Bossfight extends Level {
       this.answerFour[this.randomIndexArray[this.index]],
     );
     if (this.index !== this.question.length + 1) {
-      this.index += 1;
+      if (this.index <= 8) {
+        this.index += 1;
+      }
     }
+<<<<<<< Updated upstream:src/BossFight.ts
+=======
+    console.log(this.index);
+>>>>>>> Stashed changes:src/Bossfight.ts
     this.circleGenerator();
   }
 
   /**
+<<<<<<< Updated upstream:src/BossFight.ts
    * Plays music
    */
   public playMusic(): void {
@@ -155,6 +177,20 @@ export default class Bossfight extends Level {
    */
   public stopMusic(): void {
     this.bgm.pause();
+=======
+   * Resets level
+   */
+  public reset(): void {
+    this.isCompleted = false;
+  }
+
+  /**
+   * Resets index
+   */
+  public resetIndex(): void {
+    this.index = 0;
+    this.questionGenerator();
+>>>>>>> Stashed changes:src/Bossfight.ts
   }
 
   /**
@@ -177,7 +213,11 @@ export default class Bossfight extends Level {
           this.questionGenerator();
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
+<<<<<<< Updated upstream:src/BossFight.ts
           this.points = 10;
+=======
+          player.addPoints(10);
+>>>>>>> Stashed changes:src/Bossfight.ts
           this.questionDone = true;
           if (this.index > this.question.length) {
             this.isCompleted = true;
@@ -200,19 +240,41 @@ export default class Bossfight extends Level {
     this.currentAnswers.forEach((element, index) => {
       this.circles.push(new Circle(
         index,
+<<<<<<< Updated upstream:src/BossFight.ts
         (this.canvas.width / 8) + (index * 475),
         this.canvas.height / 4,
+=======
+        this.canvas.width / 16,
+        (this.canvas.height / 8) + (index * 160),
+>>>>>>> Stashed changes:src/Bossfight.ts
       ));
     });
   }
 
   /**
    * Draws the required items
+   *
+   * @param player player
+   * @param ctx canvas renderer
    */
+<<<<<<< Updated upstream:src/BossFight.ts
   public draw(): void {
     this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
 
+=======
+  public draw(player: Player, ctx: CanvasRenderingContext2D): void {
+    this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
+    this.canvas.style.backgroundSize = 'cover';
+
+    this.enemyfishes.forEach((enemyfish) => {
+      enemyfish.draw(ctx);
+      player.collidesWithFish(this.canvas, enemyfish);
+      enemyfish.move();
+      enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
+    });
+
+>>>>>>> Stashed changes:src/Bossfight.ts
     this.ctx.beginPath();
     this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
     this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';

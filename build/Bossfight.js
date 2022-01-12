@@ -1,4 +1,5 @@
 import Circle from './Circle.js';
+import EnemyFishes from './enemyfishes.js';
 import Level from './Level.js';
 export default class Bossfight extends Level {
     circles;
@@ -14,10 +15,15 @@ export default class Bossfight extends Level {
     index;
     randomIndexArray;
     indexArray;
+<<<<<<< Updated upstream
     bgm = new Audio('./assets/audio/music/bossfight.mp3');
     easterEgg = new Audio('./assets/audio/music/mega.mp3');
+=======
+    enemyfishes;
+>>>>>>> Stashed changes
     constructor(canvas) {
         super(100, canvas);
+        this.isCompleted = false;
         this.question = ['Wie kan je niet vertrouwen?',
             'Wat doe je al je door een oplichter gebeld wordt?',
             'Wat doe je als iemand gecyberpest wordt?',
@@ -84,16 +90,25 @@ export default class Bossfight extends Level {
             this.randomIndexArray.push(this.indexArray[j]);
             this.indexArray.splice(j, 1);
         }
+        console.log(this.randomIndexArray);
+        this.enemyfishes = [];
+        for (let k = 0; k < 4; k++) {
+            this.enemyfishes.push(new EnemyFishes(this.canvas));
+        }
         this.questionGenerator();
     }
     questionGenerator() {
+        console.log(this.index);
         this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
         this.currentQuestion = this.question[this.randomIndexArray[this.index]];
         this.currentAnswers = [];
         this.currentAnswers.push(this.answerOne[this.randomIndexArray[this.index]], this.answerTwo[this.randomIndexArray[this.index]], this.answerThree[this.randomIndexArray[this.index]], this.answerFour[this.randomIndexArray[this.index]]);
         if (this.index !== this.question.length + 1) {
-            this.index += 1;
+            if (this.index <= 8) {
+                this.index += 1;
+            }
         }
+<<<<<<< Updated upstream
         this.circleGenerator();
     }
     playMusic() {
@@ -110,6 +125,17 @@ export default class Bossfight extends Level {
     }
     stopMusic() {
         this.bgm.pause();
+=======
+        console.log(this.index);
+        this.circleGenerator();
+    }
+    reset() {
+        this.isCompleted = false;
+    }
+    resetIndex() {
+        this.index = 0;
+        this.questionGenerator();
+>>>>>>> Stashed changes
     }
     answerSelect(player) {
         let currentIndex;
@@ -125,7 +151,11 @@ export default class Bossfight extends Level {
                     this.questionGenerator();
                     player.setXPos(this.canvas);
                     player.setYPos(this.canvas);
+<<<<<<< Updated upstream
                     this.points = 10;
+=======
+                    player.addPoints(10);
+>>>>>>> Stashed changes
                     this.questionDone = true;
                     if (this.index > this.question.length) {
                         this.isCompleted = true;
@@ -143,12 +173,27 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
+<<<<<<< Updated upstream
             this.circles.push(new Circle(index, (this.canvas.width / 8) + (index * 475), this.canvas.height / 4));
         });
     }
     draw() {
         this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
         this.canvas.style.backgroundSize = 'cover';
+=======
+            this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160)));
+        });
+    }
+    draw(player, ctx) {
+        this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
+        this.canvas.style.backgroundSize = 'cover';
+        this.enemyfishes.forEach((enemyfish) => {
+            enemyfish.draw(ctx);
+            player.collidesWithFish(this.canvas, enemyfish);
+            enemyfish.move();
+            enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
+        });
+>>>>>>> Stashed changes
         this.ctx.beginPath();
         this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
         this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';

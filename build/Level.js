@@ -1,25 +1,21 @@
 export default class Level {
     canvas;
     ctx;
-    money;
+    coins;
     isCompleted;
     questionDone;
     points;
-    constructor(money, canvasId) {
-        this.money = money;
-        this.isCompleted = false;
+    constructor(coins, canvasId) {
+        this.coins = coins;
         this.points = 0;
         this.questionDone = false;
         this.canvas = canvasId;
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
+        this.canvas.width = 1800;
+        this.canvas.height = 900;
         this.ctx = this.canvas.getContext('2d');
     }
     getCompletion() {
         return this.isCompleted;
-    }
-    setCompletion() {
-        this.isCompleted = false;
     }
     getStatus() {
         return this.questionDone;
@@ -30,8 +26,8 @@ export default class Level {
     getPoints() {
         return this.points;
     }
-    getMoney() {
-        return this.money;
+    getCoins() {
+        return this.coins;
     }
     writeTextToCanvas(text, fontSize = 20, xCoordinate, yCoordinate, alignment = 'center', color = 'black') {
         this.ctx.font = `${fontSize}px sans-serif`;
