@@ -10,23 +10,13 @@ export default class Player {
     coins;
     image;
     status;
-<<<<<<< Updated upstream
-    score;
-=======
     reset;
     poggers;
->>>>>>> Stashed changes
     constructor(canvas) {
         this.keyListener = new KeyboardListener();
-        this.image = Game.loadNewImage('./assets/images/fish/player.png');
+        this.image = Game.loadNewImage('../assets/images/fish/player.png');
         this.xPos = canvas.width / 2;
         this.yPos = canvas.height / 2;
-<<<<<<< Updated upstream
-        this.velocity = 5;
-        this.score = 0;
-        this.health = 100;
-        this.status = 'alive';
-=======
         this.velocity = 4;
         this.health = 100;
         this.points = 0;
@@ -34,7 +24,6 @@ export default class Player {
         this.status = 'alive';
         this.reset = false;
         this.poggers = false;
->>>>>>> Stashed changes
     }
     move(canvas) {
         if (this.keyListener.isKeyDown(KeyboardListener.KEY_DOWN)
@@ -54,8 +43,6 @@ export default class Player {
             this.xPos -= this.velocity;
         }
     }
-<<<<<<< Updated upstream
-=======
     currentStatus() {
         if (this.health <= 0) {
             this.status = 'dead';
@@ -70,7 +57,6 @@ export default class Player {
     getDeath() {
         return this.reset;
     }
->>>>>>> Stashed changes
     select() {
         return this.keyListener.isKeyDown(KeyboardListener.KEY_SPACE);
     }
@@ -166,18 +152,8 @@ export default class Player {
     getCoins() {
         return this.coins;
     }
-    collidesWithCheckpoint(checkpoint) {
-        return this.xPos < checkpoint.getXPos() + checkpoint.getRadius()
-            && this.xPos + this.image.width > checkpoint.getXPos()
-            && this.yPos < checkpoint.getYPos() + checkpoint.getRadius()
-            && this.xPos + this.image.height > checkpoint.getYPos();
-    }
     damageHP(damage) {
         this.health -= damage;
-        if (this.health === 0) {
-            this.status = 'dead';
-            console.log('You died');
-        }
         console.log(this.health);
     }
     getHP() {
@@ -191,15 +167,6 @@ export default class Player {
     }
     setYPos(canvas) {
         this.yPos = canvas.height / 2;
-    }
-    getStatus() {
-        return this.status;
-    }
-    getScore() {
-        return this.score;
-    }
-    setScore(points) {
-        this.score += points;
     }
     draw(ctx) {
         ctx.drawImage(this.image, this.xPos, this.yPos);

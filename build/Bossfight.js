@@ -15,12 +15,7 @@ export default class Bossfight extends Level {
     index;
     randomIndexArray;
     indexArray;
-<<<<<<< Updated upstream
-    bgm = new Audio('./assets/audio/music/bossfight.mp3');
-    easterEgg = new Audio('./assets/audio/music/mega.mp3');
-=======
     enemyfishes;
->>>>>>> Stashed changes
     constructor(canvas) {
         super(100, canvas);
         this.isCompleted = false;
@@ -108,24 +103,6 @@ export default class Bossfight extends Level {
                 this.index += 1;
             }
         }
-<<<<<<< Updated upstream
-        this.circleGenerator();
-    }
-    playMusic() {
-        this.bgm.load();
-        this.bgm.play();
-        this.bgm.loop = true;
-        this.bgm.volume = 0.5;
-    }
-    easterEggMusic() {
-        this.easterEgg.load();
-        this.easterEgg.play();
-        this.easterEgg.loop = true;
-        this.easterEgg.volume = 0.5;
-    }
-    stopMusic() {
-        this.bgm.pause();
-=======
         console.log(this.index);
         this.circleGenerator();
     }
@@ -135,7 +112,6 @@ export default class Bossfight extends Level {
     resetIndex() {
         this.index = 0;
         this.questionGenerator();
->>>>>>> Stashed changes
     }
     answerSelect(player) {
         let currentIndex;
@@ -151,15 +127,10 @@ export default class Bossfight extends Level {
                     this.questionGenerator();
                     player.setXPos(this.canvas);
                     player.setYPos(this.canvas);
-<<<<<<< Updated upstream
-                    this.points = 10;
-=======
                     player.addPoints(10);
->>>>>>> Stashed changes
                     this.questionDone = true;
                     if (this.index > this.question.length) {
                         this.isCompleted = true;
-                        this.bgm.pause();
                     }
                 }
                 else {
@@ -173,14 +144,6 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
-<<<<<<< Updated upstream
-            this.circles.push(new Circle(index, (this.canvas.width / 8) + (index * 475), this.canvas.height / 4));
-        });
-    }
-    draw() {
-        this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
-        this.canvas.style.backgroundSize = 'cover';
-=======
             this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160)));
         });
     }
@@ -193,7 +156,6 @@ export default class Bossfight extends Level {
             enemyfish.move();
             enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
         });
->>>>>>> Stashed changes
         this.ctx.beginPath();
         this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
         this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';

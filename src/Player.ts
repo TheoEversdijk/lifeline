@@ -23,13 +23,9 @@ export default class Player {
 
   private status: string;
 
-<<<<<<< Updated upstream
-  private score: number;
-=======
   private reset: boolean;
 
   private poggers: boolean;
->>>>>>> Stashed changes
 
   /**
    * Initialize player
@@ -38,15 +34,9 @@ export default class Player {
    */
   public constructor(canvas: HTMLCanvasElement) {
     this.keyListener = new KeyboardListener();
-    this.image = Game.loadNewImage('./assets/images/fish/player.png');
+    this.image = Game.loadNewImage('../assets/images/fish/player.png');
     this.xPos = canvas.width / 2;
     this.yPos = canvas.height / 2;
-<<<<<<< Updated upstream
-    this.velocity = 5;
-    this.score = 0;
-    this.health = 100;
-    this.status = 'alive';
-=======
     this.velocity = 4;
     this.health = 100;
     this.points = 0;
@@ -54,7 +44,6 @@ export default class Player {
     this.status = 'alive';
     this.reset = false;
     this.poggers = false;
->>>>>>> Stashed changes
   }
 
   /**
@@ -275,29 +264,12 @@ export default class Player {
   }
 
   /**
-   * Checks if player collides with checkpoint
-   *
-   * @param checkpoint checkpoints
-   * @returns true of collides
-   */
-  public collidesWithCheckpoint(checkpoint: Checkpoint): boolean {
-    return this.xPos < checkpoint.getXPos() + checkpoint.getRadius()
-        && this.xPos + this.image.width > checkpoint.getXPos()
-        && this.yPos < checkpoint.getYPos() + checkpoint.getRadius()
-        && this.xPos + this.image.height > checkpoint.getYPos();
-  }
-
-  /**
    * Damages player
    *
    * @param damage Amount of damage
    */
   public damageHP(damage: number): void {
     this.health -= damage;
-    if (this.health === 0) {
-      this.status = 'dead';
-      console.log('You died');
-    }
     console.log(this.health);
   }
 
@@ -333,33 +305,6 @@ export default class Player {
    */
   public setYPos(canvas: HTMLCanvasElement): void {
     this.yPos = canvas.height / 2;
-  }
-
-  /**
-   * Gets the status of the player
-   *
-   * @returns status of player
-   */
-  public getStatus(): string {
-    return this.status;
-  }
-
-  /**
-   * Gets score
-   *
-   * @returns Score
-   */
-  public getScore(): number {
-    return this.score;
-  }
-
-  /**
-   * Sets score
-   *
-   * @param points Points per lvl
-   */
-  public setScore(points: number): void {
-    this.score += points;
   }
 
   /**

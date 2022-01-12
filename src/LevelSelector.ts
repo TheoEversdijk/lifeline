@@ -1,7 +1,4 @@
-<<<<<<< Updated upstream
-=======
 import BGM from './BGM.js';
->>>>>>> Stashed changes
 import Bossfight from './Bossfight.js';
 import Checkpoint from './Checkpoint.js';
 import Player from './Player.js';
@@ -15,8 +12,6 @@ export default class LevelSelector {
 
   private currentLevel: Bossfight;
 
-<<<<<<< Updated upstream
-=======
   private completion: boolean;
 
   private levelStatus: boolean;
@@ -25,7 +20,6 @@ export default class LevelSelector {
 
   private bgm: BGM;
 
->>>>>>> Stashed changes
   /**
    * Initialize level selector
    *
@@ -33,37 +27,6 @@ export default class LevelSelector {
    */
   public constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
-<<<<<<< Updated upstream
-    this.levels = [];
-    this.checkpoints = [];
-    for (let i = 0; i < 5; i++) {
-      this.levels.push(new Bossfight(this.canvas));
-    }
-    this.levels.forEach((level, index) => {
-      let xPos;
-      let yPos;
-      if (index === 0) {
-        xPos = canvas.width / 5;
-        yPos = canvas.height / 1.15;
-      }
-      if (index === 1) {
-        xPos = canvas.width / 2.26;
-        yPos = canvas.height / 1.15;
-      }
-      if (index === 2) {
-        xPos = canvas.width / 1.735;
-        yPos = canvas.height / 1.62;
-      }
-      if (index === 3) {
-        xPos = canvas.width / 1.379;
-        yPos = canvas.height / 2.68;
-      }
-      if (index === 4) {
-        xPos = canvas.width / 1.43;
-        yPos = canvas.height / 7.5;
-      }
-      this.checkpoints.push(new Checkpoint(index, xPos, yPos));
-=======
     this.bgm = new BGM();
     this.bgm.mainMenu();
     this.levelStatus = false;
@@ -96,7 +59,6 @@ export default class LevelSelector {
     }
     this.checkpoints.forEach(() => {
       this.levels.push(new Bossfight(this.canvas));
->>>>>>> Stashed changes
     });
   }
 
@@ -105,18 +67,6 @@ export default class LevelSelector {
    *
    * @param player Player
    */
-<<<<<<< Updated upstream
-  public selectLevel(player: Player): void {
-    let currentIndex: number;
-    this.checkpoints.forEach((checkpoint) => {
-      if (player.collidesWithCheckpoint(checkpoint)) {
-        currentIndex = checkpoint.getIndex();
-      }
-    });
-    this.levels.forEach((level, index) => {
-      if (currentIndex === index) {
-        this.currentLevel = level;
-=======
   public select(player: Player): void {
     this.checkpoints.forEach((checkpoint) => {
       if (player.collidesWithCheckpoint(checkpoint)) {
@@ -135,36 +85,12 @@ export default class LevelSelector {
         } else {
           this.bgm.playMusic();
         }
->>>>>>> Stashed changes
       }
     });
   }
 
   /**
    * Draws current level
-<<<<<<< Updated upstream
-   */
-  public levelDrawer(): void {
-    this.currentLevel.draw();
-  }
-
-  // private isCompleted() {
-  //   if (this.bossfight.getCompletion() === false) {
-  //     this.bossfight.draw();
-  //   }
-
-  //   if (this.bossfight.getCompletion() === true) {
-  //     this.levelSelector.draw(this.ctx);
-  //     this.bossfight.setCompletion();
-  //     this.visBucks += this.bossfight.getMoney();
-  //   }
-
-  //   if (this.bossfight.getStatus() === true) {
-  //     this.score += this.bossfight.getPoints();
-  //     this.bossfight.setStatus();
-  //   }
-  // }
-=======
    *
    * @param player player
    * @param ctx ctx
@@ -285,7 +211,6 @@ export default class LevelSelector {
   public getCompletion(): boolean {
     return this.completion;
   }
->>>>>>> Stashed changes
 
   /**
    * Draws SelectionScreen

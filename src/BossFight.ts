@@ -1,8 +1,5 @@
 import Circle from './Circle.js';
-<<<<<<< Updated upstream:src/BossFight.ts
-=======
 import EnemyFishes from './enemyfishes.js';
->>>>>>> Stashed changes:src/Bossfight.ts
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -33,13 +30,7 @@ export default class Bossfight extends Level {
 
   private indexArray: number[];
 
-<<<<<<< Updated upstream:src/BossFight.ts
-  private bgm: HTMLAudioElement = new Audio('./assets/audio/music/bossfight.mp3');
-
-  private easterEgg: HTMLAudioElement = new Audio('./assets/audio/music/mega.mp3');
-=======
   private enemyfishes: EnemyFishes[];
->>>>>>> Stashed changes:src/Bossfight.ts
 
   /**
    * Initialize Bossfight
@@ -144,40 +135,11 @@ export default class Bossfight extends Level {
         this.index += 1;
       }
     }
-<<<<<<< Updated upstream:src/BossFight.ts
-=======
     console.log(this.index);
->>>>>>> Stashed changes:src/Bossfight.ts
     this.circleGenerator();
   }
 
   /**
-<<<<<<< Updated upstream:src/BossFight.ts
-   * Plays music
-   */
-  public playMusic(): void {
-    this.bgm.load();
-    this.bgm.play();
-    this.bgm.loop = true;
-    this.bgm.volume = 0.5;
-  }
-
-  /**
-   * Plays easterEgg music
-   */
-  public easterEggMusic(): void {
-    this.easterEgg.load();
-    this.easterEgg.play();
-    this.easterEgg.loop = true;
-    this.easterEgg.volume = 0.5;
-  }
-
-  /**
-   * Stops the music
-   */
-  public stopMusic(): void {
-    this.bgm.pause();
-=======
    * Resets level
    */
   public reset(): void {
@@ -190,7 +152,6 @@ export default class Bossfight extends Level {
   public resetIndex(): void {
     this.index = 0;
     this.questionGenerator();
->>>>>>> Stashed changes:src/Bossfight.ts
   }
 
   /**
@@ -213,15 +174,10 @@ export default class Bossfight extends Level {
           this.questionGenerator();
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
-<<<<<<< Updated upstream:src/BossFight.ts
-          this.points = 10;
-=======
           player.addPoints(10);
->>>>>>> Stashed changes:src/Bossfight.ts
           this.questionDone = true;
           if (this.index > this.question.length) {
             this.isCompleted = true;
-            this.bgm.pause();
           }
         } else {
           console.log('wrong');
@@ -240,13 +196,8 @@ export default class Bossfight extends Level {
     this.currentAnswers.forEach((element, index) => {
       this.circles.push(new Circle(
         index,
-<<<<<<< Updated upstream:src/BossFight.ts
-        (this.canvas.width / 8) + (index * 475),
-        this.canvas.height / 4,
-=======
         this.canvas.width / 16,
         (this.canvas.height / 8) + (index * 160),
->>>>>>> Stashed changes:src/Bossfight.ts
       ));
     });
   }
@@ -257,12 +208,6 @@ export default class Bossfight extends Level {
    * @param player player
    * @param ctx canvas renderer
    */
-<<<<<<< Updated upstream:src/BossFight.ts
-  public draw(): void {
-    this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
-    this.canvas.style.backgroundSize = 'cover';
-
-=======
   public draw(player: Player, ctx: CanvasRenderingContext2D): void {
     this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
@@ -274,7 +219,6 @@ export default class Bossfight extends Level {
       enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
     });
 
->>>>>>> Stashed changes:src/Bossfight.ts
     this.ctx.beginPath();
     this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
     this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
