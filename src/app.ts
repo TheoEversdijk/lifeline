@@ -16,6 +16,10 @@ const startGame = () => {
  * Start the game whenever the entire DOM is loaded
  */
 const init = () => {
+  mainMenuTheme.load();
+  mainMenuTheme.play();
+  mainMenuTheme.loop = true;
+  mainMenuTheme.volume = 0.5;
   const button = document.createElement('button');
   button.innerHTML = 'Start Game';
   start.append(button);
