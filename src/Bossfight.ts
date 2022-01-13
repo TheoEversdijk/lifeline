@@ -1,5 +1,5 @@
 import Circle from './Circle.js';
-import Game from './Game.js';
+import EnemyFishes from './enemyfishes.js';
 import Level from './Level.js';
 import Player from './Player.js';
 
@@ -30,6 +30,8 @@ export default class Bossfight extends Level {
 
   private indexArray: number[];
 
+  private enemyfishes: EnemyFishes[];
+
   /**
    * Initialize Bossfight
    *
@@ -37,59 +39,60 @@ export default class Bossfight extends Level {
    */
   public constructor(canvas: HTMLCanvasElement) {
     super(100, canvas);
+    this.isCompleted = false;
     this.question = ['Wie kan je niet vertrouwen?',
-      'Wat doe je al je door een oplichter wordt gebeld?',
-      'Wat doe je als je getuige bent van cyberpesten op Instagram?',
-      'Ga je iedere volger op Instagram accepteren?',
-      'Je krijgt een eng berichtje via WhatsApp dat je, volgens het bericht, moet doorzenden aan 10 anderen want anders gebeurt er iets ergs. Jij',
+      'Wat doe je al je door een oplichter gebeld wordt?',
+      'Wat doe je als iemand gecyberpest wordt?',
+      'Accepteer je iedere volger op Instagram?',
+      'Je krijgt een eng berichtje via WhatsApp, volgens dit bericht moet je het doorsturen aan 10 anderen want anders gebeurt er iets ergs.',
       'Sommige mensen sturen schokkende fotos via WhatsApp. Hoe check je of deze afbeeldingen echt zijn?',
-      'Een vriend van vroeger stuurt je een berichtje via Messenger: Heb jij deze gekke foto van jou gezien? Klik ff op de link! Wat doe je?',
-      'Wat doe je als er een ongepaste foto op instagram naar jou wordt gestuurd?',
+      'Een vriend van vroeger stuurt je een berichtje: "Heb jij deze gekke foto van jou gezien? Klik ff op deze link!" Wat doe je?',
+      'Wat doe je als er een ongepaste foto op Instagram naar jou wordt gestuurd?',
     ];
     this.answerOne = ['Je ouders.',
       'Ophangen en melden aan de politie.',
-      'Ik wacht af en kijk wat er gebeurt.',
-      'Nee, er zijn ook rare mensen met fake accounts.',
-      '...laat het aan je kleine broertje of zusje zien.',
-      'Het is niet te controleren zodra het online staat.',
-      'Vragen of deze link wel echt is aan de persoon',
-      'Verwijderen en rapporteren',
+      'Ik wacht het af en kijk wat er gebeurt.',
+      'Nee, er zijn ook rare mensen met neppe accounts.',
+      'Je laat het aan je kleine broertje of zusje zien.',
+      'Het is niet te controleren.',
+      'Vragen of deze link wel echt is.',
+      'Verwijderen en melden.',
     ];
     this.answerTwo = ['Je leerkrachten.',
       'De instructies van de oplichter volgen.',
       'Ik ga naar de politie en doe aangifte.',
       'Tuurlijk wel, hoe meer volgers hoe beter!',
-      '...stuurt het direct door aan je 10 beste vrienden.',
-      'Uploaden naar revese image search van Google.',
-      'Vreemd! Snel kijken waar dit over gaat.',
-      'Doorsturen naar vrienden',
+      'Je stuurt het meteen door aan 10 vrienden.',
+      'Uploaden naar reverse image search van Google.',
+      'Op de link klikken.',
+      'Doorsturen naar vrienden.',
     ];
     this.answerThree = ['Je vrienden.',
       'Je ouders om hulp vragen.',
-      'Ik probeer diegene te helpen en ik rapporteer het.',
-      'Ja, nieuwe mensen ontmoeten is goed',
-      '...wilt niemand bang maken en je verwijdert het.',
-      'Via WhatsAppgroepen checken of iemand het weet',
-      'Leuk dat hij een oude foto stuurt. Snel kijken!',
-      'Op je instagram reposten',
+      'Ik probeer diegene te helpen (en ik meld het).',
+      'Ja, nieuwe mensen ontmoeten is goed.',
+      'Je wilt niemand bang maken en je verwijdert het.',
+      'Via WhatsApp groepen vragen of iemand het weet.',
+      'Een bericht naar hem sturen via een andere app.',
+      'Op je instagram reposten.',
     ];
     this.answerFour = ['Vreemdelingen.',
       'Ophangen.',
-      'Negeren en andere fotos bekijken',
-      'Ja hoor, er zijn nauwelijks fake accounts op Insta',
-      '...stuurt berichten terug naar die persoon',
-      'Zelf er kijken',
-      'Ik stuur even een e-mail of SMS om dit te checken.',
-      'Niks',
+      'Ik pest mee.',
+      'Nee, je moet nooit volgverzoeken accepteren.',
+      'Je stuurt een bericht terug naar die persoon.',
+      'Niks is te geloven wat je op WhatsApp leest.',
+      'Hem meteen blokkeren.',
+      'Niks.',
     ];
     this.correctAnswers = ['Vreemdelingen.',
       'Ophangen en melden aan de politie.',
-      'Ik probeer diegene te helpen en ik rapporteer het.',
-      'Nee, er zijn ook rare mensen met fake accounts.',
-      '...wilt niemand bang maken en je verwijdert het.',
-      'Uploaden naar revese image search van Google.',
-      'Ik stuur even een e-mail of SMS om dit te checken.',
-      'Verwijderen en rapporteren',
+      'Ik probeer diegene te helpen (en ik meld het).',
+      'Nee, er zijn ook rare mensen met neppe accounts.',
+      'Je wilt niemand bang maken en je verwijdert het.',
+      'Uploaden naar reverse image search van Google.',
+      'Een bericht naar hem sturen via een andere app.',
+      'Verwijderen en melden.',
     ];
     this.currentAnswers = [];
     this.circles = [];
@@ -104,6 +107,11 @@ export default class Bossfight extends Level {
       this.randomIndexArray.push(this.indexArray[j]);
       this.indexArray.splice(j, 1);
     }
+    console.log(this.randomIndexArray);
+    this.enemyfishes = [];
+    for (let k = 0; k < 4; k++) {
+      this.enemyfishes.push(new EnemyFishes(this.canvas));
+    }
     this.questionGenerator();
   }
 
@@ -111,6 +119,7 @@ export default class Bossfight extends Level {
    * Generates questions
    */
   public questionGenerator(): void {
+    console.log(this.index);
     this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
     this.currentQuestion = this.question[this.randomIndexArray[this.index]];
 
@@ -122,11 +131,27 @@ export default class Bossfight extends Level {
       this.answerFour[this.randomIndexArray[this.index]],
     );
     if (this.index !== this.question.length + 1) {
-      this.index += 1;
+      if (this.index <= 8) {
+        this.index += 1;
+      }
     }
-    console.log(this.currentAnswers);
-    console.log(this.correctAnswer);
+    console.log(this.index);
     this.circleGenerator();
+  }
+
+  /**
+   * Resets level
+   */
+  public reset(): void {
+    this.isCompleted = false;
+  }
+
+  /**
+   * Resets index
+   */
+  public resetIndex(): void {
+    this.index = 0;
+    this.questionGenerator();
   }
 
   /**
@@ -149,7 +174,7 @@ export default class Bossfight extends Level {
           this.questionGenerator();
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
-          this.points += 10;
+          player.addPoints(10);
           this.questionDone = true;
           if (this.index > this.question.length) {
             this.isCompleted = true;
@@ -171,22 +196,37 @@ export default class Bossfight extends Level {
     this.currentAnswers.forEach((element, index) => {
       this.circles.push(new Circle(
         index,
-        (this.canvas.width / 4) + (index * 400),
-        this.canvas.height / 4,
+        this.canvas.width / 16,
+        (this.canvas.height / 8) + (index * 160),
       ));
     });
   }
 
   /**
    * Draws the required items
+   *
+   * @param player player
+   * @param ctx canvas renderer
    */
-  public draw(): void {
-    this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/background1.png')";
+  public draw(player: Player, ctx: CanvasRenderingContext2D): void {
+    this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
     this.canvas.style.backgroundSize = 'cover';
 
+    this.enemyfishes.forEach((enemyfish) => {
+      enemyfish.draw(ctx);
+      player.collidesWithFish(this.canvas, enemyfish);
+      enemyfish.move();
+      enemyfish.outOfCanvas(this.canvas.width, this.canvas.height);
+    });
+
+    this.ctx.beginPath();
+    this.ctx.rect(0, this.canvas.height / 1.35, this.canvas.width, 350);
+    this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
+    this.ctx.fill();
+    this.ctx.stroke();
     this.writeTextToCanvas(
       `${this.currentQuestion}`,
-      40,
+      30,
       this.canvas.width / 2,
       this.canvas.height / 1.25,
     );
@@ -196,9 +236,9 @@ export default class Bossfight extends Level {
       spacing += 40;
       this.writeTextToCanvas(
         `${index + 1} ${answer}`,
-        40,
+        30,
         this.canvas.width / 2,
-        this.canvas.height / 1.20 + spacing,
+        this.canvas.height / 1.24 + spacing,
       );
 
       this.circles.forEach((circle) => {
