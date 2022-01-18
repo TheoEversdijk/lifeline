@@ -5,12 +5,12 @@ export default class Game {
     ctx;
     player;
     levelSelector;
-    constructor(canvasId) {
+    constructor(canvasId, gender) {
         this.canvas = canvasId;
         this.canvas.width = 1800;
         this.canvas.height = 900;
         this.ctx = this.canvas.getContext('2d');
-        this.player = new Player(this.canvas);
+        this.player = new Player(this.canvas, gender);
         this.levelSelector = new LevelSelector(this.canvas);
         this.loop();
     }

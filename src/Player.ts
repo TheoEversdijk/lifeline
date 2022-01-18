@@ -31,10 +31,16 @@ export default class Player {
    * Initialize player
    *
    * @param canvas Canvas
+   * @param gender gender
    */
-  public constructor(canvas: HTMLCanvasElement) {
+  public constructor(canvas: HTMLCanvasElement, gender: string) {
     this.keyListener = new KeyboardListener();
-    this.image = Game.loadNewImage('../assets/images/fish/male/player.png');
+    if (gender === 'Male') {
+      this.image = Game.loadNewImage('../assets/images/fish/male/player.png');
+    }
+    if (gender === 'Female') {
+      this.image = Game.loadNewImage('../assets/images/fish/female/player.png');
+    }
     this.xPos = canvas.width / 2;
     this.yPos = canvas.height / 2;
     this.velocity = 4;

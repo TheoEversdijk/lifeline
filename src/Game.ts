@@ -14,15 +14,16 @@ export default class Game {
    * Initialize the Game
    *
    * @param canvasId the id of the canvas
+   * @param gender gender
    */
-  public constructor(canvasId: HTMLCanvasElement) {
+  public constructor(canvasId: HTMLCanvasElement, gender: string) {
     // Construct all of the canvas
     this.canvas = canvasId;
     this.canvas.width = 1800;
     this.canvas.height = 900;
     this.ctx = this.canvas.getContext('2d');
 
-    this.player = new Player(this.canvas);
+    this.player = new Player(this.canvas, gender);
     this.levelSelector = new LevelSelector(this.canvas);
 
     this.loop();
