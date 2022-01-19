@@ -1,17 +1,23 @@
 import BGM from './BGM.js';
 import Bossfight from './Bossfight.js';
 import Checkpoint from './Checkpoint.js';
+import Game from './Game.js';
+import Shop from './Shop.js';
 export default class LevelSelector {
     canvas;
+    ctx;
     levels;
+    shop;
     checkpoints;
     currentLevel;
     completion;
     levelStatus;
     currentIndex;
     bgm;
-    constructor(canvas) {
+    constructor(canvas, ctx) {
         this.canvas = canvas;
+        this.ctx = ctx;
+        this.shop = new Shop(this.canvas, this.ctx);
         this.bgm = new BGM();
         this.bgm.mainMenu();
         this.levelStatus = false;
@@ -134,6 +140,11 @@ export default class LevelSelector {
     draw(ctx) {
         this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/worldmap_concept.png')";
         this.canvas.style.backgroundSize = 'contain';
+        const shoppingCart = Game.loadNewImage('./assets/images/icons/shopcart.png');
+        ctx.drawImage(shoppingCart, 0, 0);
+        shoppingCart.onclick = () => {
+            this.shop.draw();
+        };
         this.checkpoints.forEach((checkpoint) => {
             checkpoint.draw(ctx);
         });

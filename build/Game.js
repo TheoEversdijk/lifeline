@@ -11,7 +11,7 @@ export default class Game {
         this.canvas.height = 900;
         this.ctx = this.canvas.getContext('2d');
         this.player = new Player(this.canvas);
-        this.levelSelector = new LevelSelector(this.canvas);
+        this.levelSelector = new LevelSelector(this.canvas, this.ctx);
         this.loop();
     }
     loop = () => {

@@ -1,8 +1,17 @@
 export default class ShopItem {
-  private shopItems: string[];
+  private image: HTMLImageElement;
 
-  constructor(shopItems: string[]) {
-    this.shopItems = shopItems;
-    this.shopItems = ["url('./assets/images/fish/male/big_player.png')", "url('./assets/images/fish/female/big_player.png')", "url('./assets/images/fish/skins/goldfish.png')"];
+  private description: string;
+
+  private price: number;
+
+  public constructor(
+    image: HTMLImageElement,
+    description: string,
+    price: number,
+  ) {
+    this.image = image;
+    this.description = description;
+    this.price = price;
   }
 }

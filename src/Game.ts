@@ -1,5 +1,6 @@
 import LevelSelector from './LevelSelector.js';
 import Player from './Player.js';
+import Shop from './shop.js';
 
 export default class Game {
   private canvas: HTMLCanvasElement;
@@ -23,7 +24,7 @@ export default class Game {
     this.ctx = this.canvas.getContext('2d');
 
     this.player = new Player(this.canvas);
-    this.levelSelector = new LevelSelector(this.canvas);
+    this.levelSelector = new LevelSelector(this.canvas, this.ctx);
 
     this.loop();
   }
