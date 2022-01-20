@@ -1,3 +1,4 @@
+import Button from './button.js';
 import Checkpoint from './Checkpoint.js';
 import Circle from './Circle.js';
 import EnemyFishes from './enemyfishes.js';
@@ -41,8 +42,8 @@ export default class Player {
     if (gender === 'Female') {
       this.image = Game.loadNewImage('../assets/images/fish/female/player.png');
     }
-    this.xPos = canvas.width / 2;
-    this.yPos = canvas.height / 2;
+    this.xPos = canvas.width / 16;
+    this.yPos = canvas.height / 1.3;
     this.velocity = 4;
     this.health = 100;
     this.points = 0;
@@ -93,6 +94,13 @@ export default class Player {
   }
 
   /**
+   * Resets status
+   */
+  public resetStatus(): void {
+    this.status = 'alive';
+  }
+
+  /**
    * Gets status of player
    *
    * @returns Status
@@ -103,9 +111,11 @@ export default class Player {
 
   /**
    * death
+   *
+   * @param state life status
    */
-  public death(): void {
-    this.reset = true;
+  public death(state: boolean): void {
+    this.reset = state;
   }
 
   /**
@@ -172,6 +182,34 @@ export default class Player {
       testY = checkpoint.getYPos();
     } else if (this.yPos > checkpoint.getYPos() + checkpoint.getRadius()) {
       testY = checkpoint.getYPos() + checkpoint.getRadius();
+    }
+    const distX = this.xPos - testX;
+    const distY = this.yPos - testY;
+    const distance = Math.sqrt(distX * distX + distY * distY);
+    if (distance <= this.image.height
+    || distance <= this.image.width) {
+      return true;
+    } return false;
+  }
+
+  /**
+   * Checks if player collides with checkpoint
+   *
+   * @param button checkpoints
+   * @returns true of collides
+   */
+  public collidesWithButton(button: Button): boolean {
+    let testX = this.xPos;
+    let testY = this.yPos;
+    if (this.xPos < button.getXPos()) {
+      testX = button.getXPos();
+    } else if (this.xPos > button.getXPos() + button.getImage().width) {
+      testX = button.getXPos() + button.getImage().width;
+    }
+    if (this.yPos < button.getYPos()) {
+      testY = button.getYPos();
+    } else if (this.yPos > button.getYPos() + button.getImage().height) {
+      testY = button.getYPos() + button.getImage().height;
     }
     const distX = this.xPos - testX;
     const distY = this.yPos - testY;

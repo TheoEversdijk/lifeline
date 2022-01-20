@@ -10,8 +10,8 @@ export default class Level {
         this.points = 0;
         this.questionDone = false;
         this.canvas = canvasId;
-        this.canvas.width = 1800;
-        this.canvas.height = 900;
+        this.canvas.width = 1700;
+        this.canvas.height = 956.25;
         this.ctx = this.canvas.getContext('2d');
     }
     getCompletion() {

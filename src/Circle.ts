@@ -1,15 +1,28 @@
 import RoundObject from './RoundObject.js';
 
 export default class Circle extends RoundObject {
+  protected type: string;
+
   /**
    * Initialize Circle
    *
    * @param index Index
    * @param xPos x Position
    * @param yPos y Position
+   * @param type type of circle
    */
-  public constructor(index: number, xPos: number, yPos: number) {
+  public constructor(index: number, xPos: number, yPos: number, type: string) {
     super(index, xPos, yPos, 50);
+    this.type = type;
+  }
+
+  /**
+   * Fuck
+   *
+   * @returns Type
+   */
+  public getType(): string {
+    return this.type;
   }
 
   /**

@@ -93,7 +93,6 @@ export default class Bossfight extends Level {
         this.questionGenerator();
     }
     questionGenerator() {
-        console.log(this.index);
         this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
         this.currentQuestion = this.question[this.randomIndexArray[this.index]];
         this.currentAnswers = [];
@@ -103,7 +102,6 @@ export default class Bossfight extends Level {
                 this.index += 1;
             }
         }
-        console.log(this.index);
         this.circleGenerator();
     }
     reset() {
@@ -144,7 +142,7 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
-            this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160)));
+            this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160), 'circle'));
         });
     }
     draw(player, ctx) {

@@ -24,8 +24,8 @@ export default class Level {
     this.questionDone = false;
 
     this.canvas = canvasId;
-    this.canvas.width = 1800;
-    this.canvas.height = 900;
+    this.canvas.width = 1700;
+    this.canvas.height = 956.25;
     this.ctx = this.canvas.getContext('2d');
   }
 

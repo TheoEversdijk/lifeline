@@ -1,7 +1,12 @@
 import RoundObject from './RoundObject.js';
 export default class Circle extends RoundObject {
-    constructor(index, xPos, yPos) {
+    type;
+    constructor(index, xPos, yPos, type) {
         super(index, xPos, yPos, 50);
+        this.type = type;
+    }
+    getType() {
+        return this.type;
     }
     draw(ctx) {
         ctx.beginPath();

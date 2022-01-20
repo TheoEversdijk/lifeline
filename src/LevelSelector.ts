@@ -1,16 +1,19 @@
 import BGM from './BGM.js';
 import Bossfight from './Bossfight.js';
 import Checkpoint from './Checkpoint.js';
+import Email from './Email.js';
 import Player from './Player.js';
 
 export default class LevelSelector {
   private canvas: HTMLCanvasElement;
 
-  private levels: Bossfight[];
+  private levels: (Bossfight | Email)[];
 
   private checkpoints: Checkpoint[];
 
-  private currentLevel: Bossfight;
+  private currentLevel: (Bossfight | Email);
+
+  private levelType: string;
 
   private completion: boolean;
 
@@ -19,6 +22,8 @@ export default class LevelSelector {
   private currentIndex: number;
 
   private bgm: BGM;
+
+  private loststatus: boolean;
 
   /**
    * Initialize level selector
@@ -37,28 +42,32 @@ export default class LevelSelector {
       let yPos;
       if (index === 0) {
         xPos = canvas.width / 5.2;
-        yPos = canvas.height / 1.15;
+        yPos = canvas.height / 1.2;
       }
       if (index === 1) {
-        xPos = canvas.width / 2.3;
-        yPos = canvas.height / 1.15;
+        xPos = canvas.width / 2.2;
+        yPos = canvas.height / 1.2;
       }
       if (index === 2) {
-        xPos = canvas.width / 1.8;
-        yPos = canvas.height / 1.62;
+        xPos = canvas.width / 1.67;
+        yPos = canvas.height / 1.7;
       }
       if (index === 3) {
-        xPos = canvas.width / 1.41;
-        yPos = canvas.height / 2.68;
+        xPos = canvas.width / 1.3;
+        yPos = canvas.height / 2.95;
       }
       if (index === 4) {
-        xPos = canvas.width / 1.47;
+        xPos = canvas.width / 1.35;
         yPos = canvas.height / 7.5;
       }
       this.checkpoints.push(new Checkpoint(index, xPos, yPos));
     }
-    this.checkpoints.forEach(() => {
-      this.levels.push(new Bossfight(this.canvas));
+    this.checkpoints.forEach((element, index) => {
+      if (index % 2 === 0) {
+        this.levels.push(new Bossfight(this.canvas));
+      } else {
+        this.levels.push(new Email(this.canvas));
+      }
     });
   }
 
@@ -77,6 +86,11 @@ export default class LevelSelector {
     this.levels.forEach((level, index) => {
       if (this.currentIndex === index) {
         this.currentLevel = level;
+        if (index % 2 === 0) {
+          this.levelType = 'Bossfight';
+        } else {
+          this.levelType = 'Email';
+        }
         this.setLevelStatus(true);
         player.setXPos(this.canvas);
         this.bgm.stopMain();
@@ -129,6 +143,7 @@ export default class LevelSelector {
       winner.play();
       setTimeout(() => {
         winner.pause();
+        this.checkpoints[this.currentIndex].changeColor();
         this.resetLevel();
         player.resetCompletion();
         this.bgm.mainMenu();
@@ -144,14 +159,17 @@ export default class LevelSelector {
    */
   public loser(player: Player): void {
     if (player.getDeath() === false) {
-      player.death();
+      player.death(true);
       this.bgm.stopMusic(player);
       const death = new Audio('../assets/audio/sfx/gamelose.wav');
       death.load();
       death.play();
       death.volume = 0.5;
       setTimeout(() => {
-        window.location.reload();
+        this.resetLevel();
+        this.bgm.mainMenu();
+        player.setHP();
+        player.death(false);
       }, 5000);
     }
   }
@@ -219,7 +237,10 @@ export default class LevelSelector {
    */
   public draw(ctx: CanvasRenderingContext2D): void {
     this.canvas.style.backgroundImage = "url('../assets/images/backgrounds/worldmap_concept.png')";
-    this.canvas.style.backgroundSize = 'contain';
+    this.canvas.style.backgroundRepeat = 'no-repeat';
+    this.canvas.style.backgroundSize = '1600px 900px';
+    this.canvas.style.marginLeft = 'auto';
+    this.canvas.style.marginRight = 'auto';
     this.checkpoints.forEach((checkpoint) => {
       checkpoint.draw(ctx);
     });

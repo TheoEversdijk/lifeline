@@ -119,7 +119,6 @@ export default class Bossfight extends Level {
    * Generates questions
    */
   public questionGenerator(): void {
-    console.log(this.index);
     this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
     this.currentQuestion = this.question[this.randomIndexArray[this.index]];
 
@@ -135,7 +134,6 @@ export default class Bossfight extends Level {
         this.index += 1;
       }
     }
-    console.log(this.index);
     this.circleGenerator();
   }
 
@@ -198,6 +196,7 @@ export default class Bossfight extends Level {
         index,
         this.canvas.width / 16,
         (this.canvas.height / 8) + (index * 160),
+        'circle',
       ));
     });
   }

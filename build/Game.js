@@ -7,7 +7,7 @@ export default class Game {
     levelSelector;
     constructor(canvasId, gender) {
         this.canvas = canvasId;
-        this.canvas.width = 1800;
+        this.canvas.width = 1600;
         this.canvas.height = 900;
         this.ctx = this.canvas.getContext('2d');
         this.player = new Player(this.canvas, gender);
@@ -42,6 +42,7 @@ export default class Game {
         this.writeTextToCanvas(`VisBuck: ${this.player.getCoins()}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
         if (this.player.getStatus() === 'dead') {
+            this.player.resetStatus();
             this.levelSelector.loser(this.player);
             this.ctx.beginPath();
             this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);

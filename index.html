@@ -7,6 +7,7 @@
 
         <style>
             html {
+                zoom: 100%;
                 overflow: hidden;
                 height: 100%;
                 display: table;
@@ -19,6 +20,14 @@
                 background-image: url("./assets/images/backgrounds/startmenu.png");
                 background-size: cover;
             }
+            @media screen and (max-height: 800px) {
+                body {
+                    zoom: 60%;
+                }
+                h1 {
+                    font-size: 200px;
+                }
+            }
             #canvas {
                 border: 1px solid black
             }
@@ -28,12 +37,21 @@
                 margin-left: auto;
                 margin-right: auto;
             }
-            #title h1 {
+            button {
+                border: none;
+                padding: 20px;
+                margin: 10px;
+                font-size: 20px;
+                font-family: Arial, Helvetica, sans-serif;
+                background-color: white;
+                display: inline-block;
+            }
+            h1 {
                 -webkit-text-stroke: 2px black;
                 position: relative;
                 font-family: Arial, Helvetica, sans-serif;
                 color: cyan;
-                font-size: 90px;
+                font-size: 100px;
                 text-align: center;
                 margin-left: auto;
                 margin-right: auto;

@@ -20,8 +20,8 @@ export default class Player {
         if (gender === 'Female') {
             this.image = Game.loadNewImage('../assets/images/fish/female/player.png');
         }
-        this.xPos = canvas.width / 2;
-        this.yPos = canvas.height / 2;
+        this.xPos = canvas.width / 16;
+        this.yPos = canvas.height / 1.3;
         this.velocity = 4;
         this.health = 100;
         this.points = 0;
@@ -53,11 +53,14 @@ export default class Player {
             this.status = 'dead';
         }
     }
+    resetStatus() {
+        this.status = 'alive';
+    }
     getStatus() {
         return this.status;
     }
-    death() {
-        this.reset = true;
+    death(state) {
+        this.reset = state;
     }
     getDeath() {
         return this.reset;
@@ -103,6 +106,30 @@ export default class Player {
         }
         else if (this.yPos > checkpoint.getYPos() + checkpoint.getRadius()) {
             testY = checkpoint.getYPos() + checkpoint.getRadius();
+        }
+        const distX = this.xPos - testX;
+        const distY = this.yPos - testY;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+        if (distance <= this.image.height
+            || distance <= this.image.width) {
+            return true;
+        }
+        return false;
+    }
+    collidesWithButton(button) {
+        let testX = this.xPos;
+        let testY = this.yPos;
+        if (this.xPos < button.getXPos()) {
+            testX = button.getXPos();
+        }
+        else if (this.xPos > button.getXPos() + button.getImage().width) {
+            testX = button.getXPos() + button.getImage().width;
+        }
+        if (this.yPos < button.getYPos()) {
+            testY = button.getYPos();
+        }
+        else if (this.yPos > button.getYPos() + button.getImage().height) {
+            testY = button.getYPos() + button.getImage().height;
         }
         const distX = this.xPos - testX;
         const distY = this.yPos - testY;

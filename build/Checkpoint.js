@@ -1,18 +1,27 @@
+import Game from './Game.js';
 import RoundObject from './RoundObject.js';
 export default class Checkpoint extends RoundObject {
+    color;
+    image;
     constructor(index, xPos, yPos) {
         super(index, xPos, yPos, 35);
+        if (this.index === 4) {
+            this.image = Game.loadNewImage('../assets/images/icons/boss.png');
+        }
+        else {
+            this.image = Game.loadNewImage('../assets/images/icons/level_todo.png');
+        }
+    }
+    changeColor() {
+        if (this.index === 4) {
+            this.image = Game.loadNewImage('../assets/images/icons/boss_complete.png');
+        }
+        else {
+            this.image = Game.loadNewImage('../assets/images/icons/level_complete.png');
+        }
     }
     draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.xPos, this.yPos, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = '#88c7dc';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.font = `${20}px sans-serif`;
-        ctx.fillStyle = 'black';
-        ctx.textAlign = 'center';
-        ctx.fillText(`Level ${this.index + 1}`, this.xPos, this.yPos + 7);
+        ctx.drawImage(this.image, this.xPos, this.yPos);
     }
 }
 //# sourceMappingURL=Checkpoint.js.map
