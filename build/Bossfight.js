@@ -159,11 +159,11 @@ export default class Bossfight extends Level {
         this.ctx.fillStyle = 'rgba(173, 216, 230, 0.5)';
         this.ctx.fill();
         this.ctx.stroke();
-        this.writeTextToCanvas(`${this.currentQuestion}`, 30, this.canvas.width / 2, this.canvas.height / 1.25);
+        this.writeTextToCanvas(`${this.currentQuestion}`, 25, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.currentAnswers.forEach((answer, index) => {
             spacing += 40;
-            this.writeTextToCanvas(`${index + 1} ${answer}`, 30, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
+            this.writeTextToCanvas(`${index + 1} ${answer}`, 25, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
             this.circles.forEach((circle) => {
                 circle.draw(this.ctx);
             });

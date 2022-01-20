@@ -225,7 +225,7 @@ export default class Bossfight extends Level {
     this.ctx.stroke();
     this.writeTextToCanvas(
       `${this.currentQuestion}`,
-      30,
+      25,
       this.canvas.width / 2,
       this.canvas.height / 1.25,
     );
@@ -235,7 +235,7 @@ export default class Bossfight extends Level {
       spacing += 40;
       this.writeTextToCanvas(
         `${index + 1} ${answer}`,
-        30,
+        25,
         this.canvas.width / 2,
         this.canvas.height / 1.24 + spacing,
       );
