@@ -6,7 +6,7 @@ export default class EnemyFishes {
     fish;
     constructor(canvas, index) {
         if (index === 4) {
-            this.xPos = Game.randomNumber(700, canvas.width - 250);
+            this.xPos = Game.randomNumber(450, canvas.width - 300);
         }
         else {
             this.xPos = Game.randomNumber(350, canvas.width - 500);
@@ -24,7 +24,7 @@ export default class EnemyFishes {
     outOfCanvas(width, height) {
         if (this.yPos + this.fish.height >= height) {
             this.yPos = 0;
-            this.xPos = Game.randomNumber(400, width - 500);
+            this.xPos = Game.randomNumber(450, width - 300);
         }
     }
     getXPos() {

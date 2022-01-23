@@ -119,11 +119,11 @@ export default class Bossfight extends Level {
     }
     this.enemyfishes = [];
     if (this.checkpointIndex === 4) {
-      for (let k = 0; k < 8; k++) {
+      for (let k = 0; k < 7; k++) {
         this.enemyfishes.push(new EnemyFishes(this.canvas, this.checkpointIndex));
       }
     } else {
-      for (let k = 0; k < 4; k++) {
+      for (let k = 0; k < 5; k++) {
         this.enemyfishes.push(new EnemyFishes(this.canvas, this.checkpointIndex));
       }
     }
