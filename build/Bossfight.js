@@ -167,7 +167,7 @@ export default class Bossfight extends Level {
                     player.setYPos(this.canvas);
                     player.addPoints(10);
                     this.questionDone = true;
-                    if (this.index > this.question.length) {
+                    if (this.index > this.randomIndexArray.length) {
                         this.isCompleted = true;
                     }
                 }
