@@ -6,7 +6,6 @@ const startGame = () => {
     const genderSelect = new GenderSelector(body);
 };
 const init = () => {
-    console.log(window.screen.width, window.screen.height);
     document.getElementById('logo').onmouseup = (event) => {
         if (event.button === 2) {
             window.open('https://www.youtube.com/watch?v=9gAVaTKcpMY');

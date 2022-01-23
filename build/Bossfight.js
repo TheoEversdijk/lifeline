@@ -1,5 +1,6 @@
 import Circle from './Circle.js';
 import EnemyFishes from './enemyfishes.js';
+import Game from './Game.js';
 import Level from './Level.js';
 export default class Bossfight extends Level {
     circles;
@@ -16,9 +17,15 @@ export default class Bossfight extends Level {
     randomIndexArray;
     indexArray;
     enemyfishes;
-    constructor(canvas) {
+    checkpointIndex;
+    bossHealth;
+    constructor(canvas, index) {
         super(100, canvas);
+        this.checkpointIndex = index;
         this.isCompleted = false;
+        if (this.checkpointIndex === 4) {
+            this.bossHealth = 400;
+        }
         this.question = ['Wie kan je niet vertrouwen?',
             'Wat doe je al je door een oplichter gebeld wordt?',
             'Wat doe je als iemand gecyberpest wordt?',
@@ -85,10 +92,16 @@ export default class Bossfight extends Level {
             this.randomIndexArray.push(this.indexArray[j]);
             this.indexArray.splice(j, 1);
         }
-        console.log(this.randomIndexArray);
         this.enemyfishes = [];
-        for (let k = 0; k < 4; k++) {
-            this.enemyfishes.push(new EnemyFishes(this.canvas));
+        if (this.checkpointIndex === 4) {
+            for (let k = 0; k < 8; k++) {
+                this.enemyfishes.push(new EnemyFishes(this.canvas, this.checkpointIndex));
+            }
+        }
+        else {
+            for (let k = 0; k < 4; k++) {
+                this.enemyfishes.push(new EnemyFishes(this.canvas, this.checkpointIndex));
+            }
         }
         this.questionGenerator();
     }
@@ -121,6 +134,9 @@ export default class Bossfight extends Level {
         this.currentAnswers.forEach((answer, index) => {
             if (currentIndex === index) {
                 if (answer === this.correctAnswer) {
+                    if (this.checkpointIndex === 4) {
+                        this.bossHealth -= 80;
+                    }
                     console.log('correct');
                     this.questionGenerator();
                     player.setXPos(this.canvas);
@@ -142,7 +158,12 @@ export default class Bossfight extends Level {
     }
     circleGenerator() {
         this.currentAnswers.forEach((element, index) => {
-            this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160), 'circle'));
+            if (this.checkpointIndex === 4) {
+                this.circles.push(new Circle(index, this.canvas.width / 4, (this.canvas.height / 8) + (index * 160), 'circle'));
+            }
+            else {
+                this.circles.push(new Circle(index, this.canvas.width / 16, (this.canvas.height / 8) + (index * 160), 'circle'));
+            }
         });
     }
     draw(player, ctx) {
@@ -162,12 +183,17 @@ export default class Bossfight extends Level {
         this.writeTextToCanvas(`${this.currentQuestion}`, 25, this.canvas.width / 2, this.canvas.height / 1.25);
         let spacing = 0;
         this.currentAnswers.forEach((answer, index) => {
-            spacing += 40;
+            spacing += 30;
             this.writeTextToCanvas(`${index + 1} ${answer}`, 25, this.canvas.width / 2, this.canvas.height / 1.24 + spacing);
             this.circles.forEach((circle) => {
                 circle.draw(this.ctx);
             });
         });
+        if (this.checkpointIndex === 4) {
+            const shark = Game.loadNewImage('./assets/images/fish/shark.png');
+            this.ctx.drawImage(shark, -40, this.canvas.height / 4);
+            this.writeTextToCanvas(`Boss HP: ${this.bossHealth}`, 25, this.canvas.width / 16, 50);
+        }
     }
 }
 //# sourceMappingURL=Bossfight.js.map

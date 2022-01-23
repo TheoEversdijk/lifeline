@@ -134,8 +134,8 @@ export default class Player {
         const distX = this.xPos - testX;
         const distY = this.yPos - testY;
         const distance = Math.sqrt(distX * distX + distY * distY);
-        if (distance <= this.image.height
-            || distance <= this.image.width) {
+        if (distance <= this.image.height - 70
+            || distance <= this.image.width - 70) {
             return true;
         }
         return false;
@@ -158,7 +158,7 @@ export default class Player {
         const distX = this.xPos - testX;
         const distY = this.yPos - testY;
         const distance = Math.sqrt(distX * distX + distY * distY);
-        if (distance + 60 <= this.image.height || distance + 90 <= this.image.width) {
+        if (distance + 60 <= this.image.height || distance + 100 <= this.image.width) {
             this.damageHP(5);
             this.xPos = canvas.width / 1.1;
         }

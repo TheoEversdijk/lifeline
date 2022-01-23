@@ -12,11 +12,10 @@ export default class LevelSelector {
     levelStatus;
     currentIndex;
     bgm;
-    loststatus;
     constructor(canvas) {
         this.canvas = canvas;
         this.bgm = new BGM();
-        this.bgm.mainMenu();
+        this.bgm.levelSelect();
         this.levelStatus = false;
         this.checkpoints = [];
         this.levels = [];
@@ -47,7 +46,7 @@ export default class LevelSelector {
         }
         this.checkpoints.forEach((element, index) => {
             if (index % 2 === 0) {
-                this.levels.push(new Bossfight(this.canvas));
+                this.levels.push(new Bossfight(this.canvas, index));
             }
             else {
                 this.levels.push(new Email(this.canvas));
@@ -72,12 +71,20 @@ export default class LevelSelector {
                 }
                 this.setLevelStatus(true);
                 player.setXPos(this.canvas);
-                this.bgm.stopMain();
-                if (player.getPoints() >= 240) {
+                this.bgm.stopLevelSelect();
+                if (player.getPoints() >= 400) {
                     this.bgm.easterEggMusic();
                 }
-                else {
-                    this.bgm.playMusic();
+                else if (this.currentIndex % 2 !== 0) {
+                    this.bgm.playbgm1();
+                }
+                else if (this.currentIndex % 2 === 0) {
+                    if (this.currentIndex === 4) {
+                        this.bgm.bossfight();
+                    }
+                    else {
+                        this.bgm.playbgm2();
+                    }
                 }
             }
         });
@@ -106,9 +113,9 @@ export default class LevelSelector {
                 this.checkpoints[this.currentIndex].changeColor();
                 this.resetLevel();
                 player.resetCompletion();
-                this.bgm.mainMenu();
+                this.bgm.levelSelect();
                 player.setHP();
-            }, 5000);
+            }, 4000);
         }
     }
     loser(player) {
@@ -121,10 +128,10 @@ export default class LevelSelector {
             death.volume = 0.5;
             setTimeout(() => {
                 this.resetLevel();
-                this.bgm.mainMenu();
+                this.bgm.levelSelect();
                 player.setHP();
                 player.death(false);
-            }, 5000);
+            }, 4000);
         }
     }
     isCompleted(ctx) {

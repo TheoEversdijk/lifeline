@@ -54,7 +54,6 @@ export default class Game {
    */
   public draw(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.player.draw(this.ctx);
     if (this.levelSelector.getLevelStatus() === false) {
       this.levelSelector.draw(this.ctx);
     }
@@ -81,6 +80,8 @@ export default class Game {
       this.canvas.width / 1.40,
       50,
     );
+
+    this.player.draw(this.ctx);
 
     if (this.player.getStatus() === 'dead') {
       this.player.resetStatus();

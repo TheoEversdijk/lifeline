@@ -4,8 +4,13 @@ export default class EnemyFishes {
     yPos;
     speed;
     fish;
-    constructor(canvas) {
-        this.xPos = Game.randomNumber(400, canvas.width - 500);
+    constructor(canvas, index) {
+        if (index === 4) {
+            this.xPos = Game.randomNumber(700, canvas.width - 250);
+        }
+        else {
+            this.xPos = Game.randomNumber(350, canvas.width - 500);
+        }
         this.yPos = 0;
         this.fish = (Game.loadNewImage('./assets/images/fish/fishe.png'));
         this.speed = Game.randomNumber(1, 4);

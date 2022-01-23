@@ -31,7 +31,6 @@ export default class Game {
     }
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.player.draw(this.ctx);
         if (this.levelSelector.getLevelStatus() === false) {
             this.levelSelector.draw(this.ctx);
         }
@@ -41,6 +40,7 @@ export default class Game {
         this.writeTextToCanvas(`Score: ${this.player.getPoints()}`, 40, this.canvas.width / 2, 50);
         this.writeTextToCanvas(`VisBuck: ${this.player.getCoins()}`, 40, this.canvas.width / 4, 50);
         this.writeTextToCanvas(`HP: ${this.player.getHP()}`, 40, this.canvas.width / 1.40, 50);
+        this.player.draw(this.ctx);
         if (this.player.getStatus() === 'dead') {
             this.player.resetStatus();
             this.levelSelector.loser(this.player);

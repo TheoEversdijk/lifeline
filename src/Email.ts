@@ -30,14 +30,14 @@ export default class Email extends Level {
   public constructor(canvas: HTMLCanvasElement) {
     super(100, canvas);
     this.isCompleted = false;
-    this.emails = ['./assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
-      './assets/images/emails/neppostnl.png',
+    this.emails = ['./assets/images/emails/echtepostnl.png',
+      './assets/images/emails/echteofferte.png',
+      './assets/images/emails/echteoma.png',
+      './assets/images/emails/echteprijs.png',
+      './assets/images/emails/echtetandarts.png',
+      './assets/images/emails/nepbank.png',
+      './assets/images/emails/nepboodschappen.png',
+      './assets/images/emails/nepoliesjeik.png',
     ];
     this.answers = ['Ja', 'Nee'];
     this.correctAnswers = ['Ja',
@@ -45,9 +45,9 @@ export default class Email extends Level {
       'Ja',
       'Ja',
       'Ja',
-      'Ja',
-      'Ja',
-      'Ja',
+      'Nee',
+      'Nee',
+      'Nee',
     ];
     this.index = 0;
     this.buttons = [];
@@ -61,13 +61,12 @@ export default class Email extends Level {
       this.randomIndexArray.push(this.indexArray[j]);
       this.indexArray.splice(j, 1);
     }
-    console.log(this.randomIndexArray);
     this.questionGenerator();
     this.answers.forEach((answer, index) => {
       if (answer === 'Ja') {
         this.buttons.push(new Button(
           index,
-          this.canvas.width / 3,
+          this.canvas.width / 3.2,
           this.canvas.height / 1.3,
           Game.loadNewImage('./assets/images/icons/real.png'),
           'Ja',
@@ -89,7 +88,6 @@ export default class Email extends Level {
    * Generates questions
    */
   public questionGenerator(): void {
-    console.log(this.index);
     this.correctAnswer = this.correctAnswers[this.randomIndexArray[this.index]];
     this.currentEmail = this.emails[this.randomIndexArray[this.index]];
 
@@ -98,8 +96,6 @@ export default class Email extends Level {
         this.index += 1;
       }
     }
-
-    console.log(this.index);
   }
 
   /**
@@ -123,9 +119,9 @@ export default class Email extends Level {
    * @param player Player
    */
   public answerSelect(player: Player): void {
-    this.buttons.forEach((button, index) => {
+    this.buttons.forEach((button) => {
       if (player.collidesWithButton(button)) {
-        if (button.getType() === this.correctAnswers[index]) {
+        if (button.getType() === this.correctAnswer) {
           console.log('correct');
           this.questionGenerator();
           player.setXPos(this.canvas);
