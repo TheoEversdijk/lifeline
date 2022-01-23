@@ -50,59 +50,83 @@ export default class Bossfight extends Level {
     if (this.checkpointIndex === 4) {
       this.bossHealth = 400;
     }
-    this.question = ['Wie kan je niet vertrouwen?',
-      'Wat doe je al je door een oplichter gebeld wordt?',
+    this.question = ['Wat moet je doen als een vreemdeling je vraagt een foto van jezelf naar hem of haar te sturen?',
+      'Wat is het allerbelangrijkste dat je jezelf moet afvragen voordat je iets online zet?',
       'Wat doe je als iemand gecyberpest wordt?',
-      'Accepteer je iedere volger op Instagram?',
+      'Je ontvangt een nieuw vriendschapsverzoek van een persoon die geen profielfoto heeft, maar je herkent de naam als iemand uit je klas. wat doe je?',
       'Je krijgt een eng berichtje via WhatsApp, volgens dit bericht moet je het doorsturen aan 10 anderen want anders gebeurt er iets ergs.',
-      'Sommige mensen sturen schokkende fotos via WhatsApp. Hoe check je of deze afbeeldingen echt zijn?',
+      'Een vriend heeft een video van jou op het internet gezet, jij vindt dit niet leuk. Je vriend wil de video niet verwijderen. Wat doe je nu?',
       'Een vriend van vroeger stuurt je een berichtje: "Heb jij deze gekke foto van jou gezien? Klik ff op deze link!" Wat doe je?',
       'Wat doe je als er een ongepaste foto op Instagram naar jou wordt gestuurd?',
+      'Je moet een wachtwoord maken voor een belangrijke website. Wat is een goed wachtwoord?',
+      'Je vriend vertelt je dat die online met iemand praat en dat ze hem in het weekend gaat ontmoeten, wat moet je doen?',
+      'Je bent op een spelletjeswebsite en er wordt je gevraagd om een link te downloaden voordat je kan spelen. Wat moet je doen?',
+      'Een van je vrienden wil een nieuwe challenge nadoen en filmen voor een tiktok, deze challenge ziet er gevaarlijk uit. Wat doe je?',
     ];
-    this.answerOne = ['Je ouders.',
-      'Ophangen en melden aan de politie.',
+    this.answerOne = ['Negeren',
+      'Vind ik het goed dat iedereen deze post kan zien?',
       'Ik wacht het af en kijk wat er gebeurt.',
-      'Nee, er zijn ook rare mensen met neppe accounts.',
+      'Vraag voordat je het vriendschapsverzoek accepteert persoonlijk aan je klasgenoot of hij dat is',
       'Je laat het aan je kleine broertje of zusje zien.',
-      'Het is niet te controleren.',
+      'Je blijft je vriend vragen om het te verwijderen tot hij het doet',
       'Vragen of deze link wel echt is.',
       'Verwijderen en melden.',
+      'Je volledige naam',
+      'Met je vriend meegaan',
+      'Laat de link aan een volwassene zien en vraag of het veilig is',
+      'Je doet de challenge om hopelijk likes te krijgen',
     ];
-    this.answerTwo = ['Je leerkrachten.',
-      'De instructies van de oplichter volgen.',
+    this.answerTwo = ['Stuur de foto, ook al is het een vreemde',
+      'Zal dit me populair maken?',
       'Ik ga naar de politie en doe aangifte.',
-      'Tuurlijk wel, hoe meer volgers hoe beter!',
+      'Je accepteert het vriendschapsverzoek en je stuurt een berichtje om te vragen of het je vriend is.',
       'Je stuurt het meteen door aan 10 vrienden.',
-      'Uploaden naar reverse image search van Google.',
+      'Je praat met je ouders of leerkracht en zegt waarom je het niet leuk vindt',
       'Op de link klikken.',
       'Doorsturen naar vrienden.',
+      'Een bijnaam die je vrienden je geven',
+      'Je vriend alleen laten gaan',
+      'Download het zodat je kan spelen',
+      'Leg uit waarom je denkt dat dit geen goed idee is en meld het aan je ouders of leerkracht',
     ];
-    this.answerThree = ['Je vrienden.',
-      'Je ouders om hulp vragen.',
+    this.answerThree = ['Stuur de foto als je denkt dat je hem kent',
+      'Zullen mijn vrienden dit grappig vinden?',
       'Ik probeer diegene te helpen (en ik meld het).',
-      'Ja, nieuwe mensen ontmoeten is goed.',
+      'Je accepteert het vriendschapsverzoek meteen',
       'Je wilt niemand bang maken en je verwijdert het.',
-      'Via WhatsApp groepen vragen of iemand het weet.',
+      'Je laat het, je kunt er verder niets aan doen',
       'Een bericht naar hem sturen via een andere app.',
       'Op je instagram reposten.',
+      'Een deel van je naam en een nummer(mario123)',
+      'Meteen aan een volwassene vertellen',
+      'Vraag aan je vriend om het eerst te downloaden en testen',
+      'Daag ze uit om iets nog gevaarlijker te doen voor meer views',
     ];
-    this.answerFour = ['Vreemdelingen.',
-      'Ophangen.',
+    this.answerFour = ["Stuur geen foto's en vertel het meteen aan een volwassene",
+      'Heb ik mijn spelling gecontroleerd?',
       'Ik pest mee.',
-      'Nee, je moet nooit volgverzoeken accepteren.',
+      'Je stuurt hem een bericht om te vragen wie hij is',
       'Je stuurt een bericht terug naar die persoon.',
-      'Niks is te geloven wat je op WhatsApp leest.',
+      'Je plaats een grappige foto van je vriend om hem terug te pakken',
       'Hem meteen blokkeren.',
       'Niks.',
+      'Een woord met hoofdletters , cijfers en leestekens (bijvoorbeeld @,!.)',
+      'Vertellen aan je andere vrienden',
+      'Je test het spel op iemand anders zijn computer',
+      'Je helpt de video op te nemen maar alleen als je vriend al de gevaarlijke dingen doet',
     ];
-    this.correctAnswers = ['Vreemdelingen.',
-      'Ophangen en melden aan de politie.',
+    this.correctAnswers = ["Stuur geen foto's en vertel het meteen aan een volwassene",
+      'Vind ik het goed dat iedereen deze post kan zien?',
       'Ik probeer diegene te helpen (en ik meld het).',
-      'Nee, er zijn ook rare mensen met neppe accounts.',
+      'Vraag voordat je het vriendschapsverzoek accepteert persoonlijk aan je klasgenoot of hij dat is',
       'Je wilt niemand bang maken en je verwijdert het.',
-      'Uploaden naar reverse image search van Google.',
+      'Je praat met je ouders of leerkracht en zegt waarom je het niet leuk vindt',
       'Een bericht naar hem sturen via een andere app.',
       'Verwijderen en melden.',
+      'Een woord met hoofdletters , cijfers en leestekens (bijvoorbeeld @,!.)',
+      'Meteen aan een volwassene vertellen',
+      'Laat de link aan een volwassene zien en vraag of het veilig is',
+      'Leg uit waarom je denkt dat dit geen goed idee is en meld het aan je ouders of leerkracht',
     ];
     this.currentAnswers = [];
     this.circles = [];
@@ -235,7 +259,11 @@ export default class Bossfight extends Level {
    * @param ctx canvas renderer
    */
   public draw(player: Player, ctx: CanvasRenderingContext2D): void {
-    this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
+    if (this.checkpointIndex === 4) {
+      this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background5.png')";
+    } else {
+      this.canvas.style.backgroundImage = "url('./assets/images/backgrounds/background1.png')";
+    }
     this.canvas.style.backgroundSize = 'cover';
 
     this.enemyfishes.forEach((enemyfish) => {
