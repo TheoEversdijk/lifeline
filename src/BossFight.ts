@@ -184,7 +184,7 @@ export default class Bossfight extends Level {
       if (currentIndex === index) {
         if (answer === this.correctAnswer) {
           if (this.checkpointIndex === 4) {
-            this.bossHealth -= 80;
+            this.bossHealth -= 50;
           }
           console.log('correct');
           this.questionGenerator();
