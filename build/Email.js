@@ -1,4 +1,4 @@
-import Button from './Button.js';
+import Button from './button.js';
 import Game from './Game.js';
 import Level from './Level.js';
 export default class Email extends Level {

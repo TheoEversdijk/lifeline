@@ -1,7 +1,7 @@
 import Button from './button.js';
 import Checkpoint from './Checkpoint.js';
 import Circle from './Circle.js';
-import EnemyFishes from './EnemyFishes.js';
+import EnemyFishes from './enemyfishes.js';
 import Game from './Game.js';
 import KeyboardListener from './KeyboardListener.js';
 
