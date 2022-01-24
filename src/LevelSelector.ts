@@ -78,7 +78,7 @@ export default class LevelSelector {
     this.checkpoints.forEach((checkpoint) => {
       if (player.collidesWithCheckpoint(checkpoint)) {
         this.currentIndex = checkpoint.getIndex();
-        console.log(this.currentIndex);
+        // console.log(this.currentIndex);
       }
     });
     this.levels.forEach((level, index) => {

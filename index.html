@@ -29,7 +29,7 @@
                 }
             }
             #canvas {
-                border: 1px solid black
+                border: 1px solid black;
             }
             #button {
                 position: relative;
@@ -53,7 +53,7 @@
             .logo {
                 position: fixed;
                 top: 15px;
-                left: 43px;
+                left: 60px;
                 height: auto; 
                 width: auto; 
                 max-width: 100px; 
@@ -74,6 +74,8 @@
                 position: fixed;
                 top: 200px;
                 left: -30px;
+                background-color: rgb(80, 214, 255);
+                outline: 2px solid black;
             }
 
             h1 {
@@ -83,6 +85,11 @@
                 text-align: center;
                 margin-left: auto;
                 margin-right: auto;
+            }
+
+            .controlhead {
+                color: cyan;
+                -webkit-text-stroke: 0.9px black;
             }
         </style>
 
@@ -96,9 +103,9 @@
         <p>NFThieves, 2021-2022</p>
         <div class="controls">
             <ul>
-            <li>Controls:</li>
+            <li class="controlhead">Besturing</li>
             <li>Bewegen: Pijltjes</li>
-            <li>Spatie: Selecteren</li>
+            <li>Selecteren: Spatie</li>
             </ul>
         </div>
         <!-- <canvas id='canvas'></canvas> -->

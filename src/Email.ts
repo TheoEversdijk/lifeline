@@ -1,4 +1,4 @@
-import Button from './button.js';
+import Button from './Button.js';
 import Game from './Game.js';
 import Level from './Level.js';
 import Player from './Player.js';
@@ -40,7 +40,7 @@ export default class Email extends Level {
       './assets/images/emails/nepoliesjeik.png',
     ];
     this.answers = ['Ja', 'Nee'];
-    this.correctAnswers = ['Ja',
+    this.correctAnswers = ['Nee',
       'Ja',
       'Ja',
       'Ja',
@@ -133,7 +133,7 @@ export default class Email extends Level {
           }
         } else {
           console.log('wrong');
-          player.damageHP(10);
+          player.damageHP(25);
           player.setXPos(this.canvas);
           player.setYPos(this.canvas);
         }
