@@ -24,7 +24,7 @@ export default class Bossfight extends Level {
         this.checkpointIndex = index;
         this.isCompleted = false;
         if (this.checkpointIndex === 4) {
-            this.bossHealth = 400;
+            this.bossHealth = 600;
         }
         this.question = ['Wat moet je doen als een vreemdeling je vraagt een foto van jezelf naar hem of haar te sturen?',
             'Wat is het allerbelangrijkste dat je jezelf moet afvragen voordat je iets online zet?',
@@ -107,7 +107,7 @@ export default class Bossfight extends Level {
         this.currentAnswers = [];
         this.circles = [];
         this.index = 0;
-        this.indexArray = [0, 1, 2, 3, 4, 5, 6, 7];
+        this.indexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         this.randomIndexArray = [];
         let i = this.indexArray.length;
         let j = 0;
@@ -135,7 +135,7 @@ export default class Bossfight extends Level {
         this.currentAnswers = [];
         this.currentAnswers.push(this.answerOne[this.randomIndexArray[this.index]], this.answerTwo[this.randomIndexArray[this.index]], this.answerThree[this.randomIndexArray[this.index]], this.answerFour[this.randomIndexArray[this.index]]);
         if (this.index !== this.question.length + 1) {
-            if (this.index <= 8) {
+            if (this.index <= 12) {
                 this.index += 1;
             }
         }
